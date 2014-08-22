@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title ng-bind="title + 'Gerenciamento de Conteúdo'">Gerenciamento de Conteúdo</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Project Default CSS -->
+    <link href="css/panel.ui.css" rel="stylesheet" type="text/css">
+    <!-- Page CSS -->
+    <link href="css/app.css" rel="stylesheet" type="text/css">
+    <link href="css/app.mobile.css" rel="stylesheet" type="text/css">
+</head>
+<!-- App Main -->
+<body ng-controller='ApplicationController'>
+
+    <!-- Container Main -->
+    <div id="container">
+        <!-- Barra Lateral -->
+        <div id="slide-left" ng-class="{opened: open, closed: !open}">
+            <!-- Barra topo, info de login -->
+            <div class="top-left">
+                <a href="" ng-click="openLeftBar()" class="img-app button" ng-class="{opened: open, closed: !open}"></a>
+                <span class="user-info" ng-show="open">Tritoq Agencia Digital</span>
+            </div>
+            <!-- Menu principal -->
+            <div class="main-menu"  ng-class="{opened: open, closed: !open}" ng-init="items = ['Item02', 'Item03', 'Item04']" >
+                <ul>
+                    <li><a href="#" class="dashboard">Dashboard</a></li>
+                    <li><a href="" class="item">Item 01</a></li>
+                    <li>
+                        <a class="subitem" ng-class="{opened: subitem}" ng-click="subitem = !subitem">Subitem</a>
+                        <ul class="submenu" ng-class="{opened: subitem}">
+                            <li ng-repeat="item in items"><a href="#/Sub{{item}}.crud" id="Sub{{item}}" class="item">{{item}}</a></li>
+                        </ul>
+                    </li>
+                    <li ng-repeat="item in items"><a href="#/{{item}}.crud" id="{{item}}" class="item">{{item}}</a></li>
+                </ul>
+            </div>
+            <!-- Barra de rodapé -->
+            <div class="bar-down" ng-class="{opened: open, closed: !open}" >
+                <ul class="bar-menu">
+                    <li><a href="" class="user" tooltip="Usuários">Administrar Usuários</a></li>
+                    <li><a href="" class="activity"  tooltip="Visualizar Atividades">Visualizar Atividades</a></li>
+                    <li><a href="" class="config"  tooltip="Configurações">Configurações</a></li>
+                    <li><a href="" class="logout" ng-click="exit()"  tooltip="Sair do Sistema">Sair</a></li>
+                </ul>
+            </div>
+            <!-- -->
+        </div>
+        <!-- Conteúdo Central -->
+        <div id="slide-right" class="main-content" ng-class="{opened: open, closed: !open}" ng-click="listenerOuterClick()" >
+            <div ng-view></div>
+        </div>
+        <!-- Barra de notificações -->
+        <div class="notification" ng-class="{opened: notify, closed: !notify}">
+            <a href="" class="ico" ng-click="openRightBar('last')">
+            </a>
+            <ul class="menu" ng-class="{disabled: notifyIsLoading}">
+                <li><a ng-click="openRightBar('user')" tooltip="Meu Perfil" tooltip-placement="left"  href="" class="user" ng-class="{opened: bar_user}" >Perfil de Usuário</a></li>
+                <li><a ng-click="openRightBar('history')" tooltip="Minhas Atividades" tooltip-placement="left"   href="" class="history" ng-class="{opened: bar_history}">Histórico</a></li>
+                <li><a ng-click="openRightBar('dashboard')" tooltip="Meu Dashboard" tooltip-placement="left"   href="" class="dashboard" ng-class="{opened: bar_dashboard}">Meu Dashboard</a></li>
+                <li><a ng-click="openRightBar('cache')" tooltip="Limpar Cache" tooltip-placement="left"   href="" class="cache" ng-class="{opened: bar_cache}">Limpar Cache</a></li>
+            </ul>
+            <div></div>
+        </div>
+        <!-- Conteúdo da barra de notificações -->
+        <div class='bar-notification' ng-class="{opened: notify, closed: !notify}" ng-controller="NotificationController">
+
+            <div id="msg" ng-class="{opened: message.show, closed: !message.show}">
+                {{message.text}}
+            </div>
+
+            <div class="user" ng-show="bar_user">
+                <h2>Meu Perfil</h2>
+                <div>
+                    <form action="" name="userForm" class="form" ng-submit="updateUser(user, userForm.$valid)" role="form">
+                        <fieldset ng-disabled="loading" >
+                            <div class="form-group">
+                                <label>
+                                    Grupo
+                                </label>
+                                <input type="text" class="form-control" id="grupo" name="grupo" ng-model="user.grupo" disabled  />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nome">
+                                    Nome
+                                </label>
+                                <input type="text" name="nome" id="nome" ng-model="user.nome" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">
+                                    E-mail
+                                </label>
+                                <input type="email" id="email" name="email" ng-model="user.email" class="form-control" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">
+                                    Nova senha
+                                </label>
+                                <input type="password" id="password" name="password" ng-model="user.password" ng-minlength=5 placeholder="Nova senha" class="form-control"  />
+                                <ul id="strength" check-strength="user.password">
+                                </ul>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cpassword">
+                                    Confirmar nova senha
+                                </label>
+                                <input type="password" id="cpassword" name="cpassword" class="form-control" ng-model="user.cpassword" repeat-password="password" placeholder="Repita a nova senha"  />
+                            </div>
+
+                            <button ng-disabled="userForm.$invalid || loading" type="submit" class="btn btn-primary" ng-bind="loading ? 'Carregando' : 'Salvar Dados' ">Salvar dados</button>
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div class="dashboard" ng-show="bar_dashboard">
+                <h2>Meu Dashboard</h2>
+                <form  class="form" name="dashboardForm" action="" ng-submit="updateDashboard(dashboard.items)">
+                    <div ng-show="loading && !dashboard.isLoad" class='preloader'></div>
+                    <div class='form-group'>
+                        <ul ng-model="dashboard.items" class="dashboard-list">
+                            <li class='item' ng-repeat="item in dashboard.items"><label><input name="dashboardItems" type="checkbox" value="{{item.id}}" ng-model="item.selected" /> {{item.nome}} </label></li>
+                        </ul>
+                        <div class='clear clearfix'></div>
+                    </div>
+                    <div class="form-group">
+                        <button ng-show="dashboard.isLoad" ng-disabled="loading" type="submit" class="btn btn-primary" ng-bind="loading ? 'Carregando' : 'Salvar Dados' ">Salvar dados</button>
+                    </div>
+                </form>
+            </div>
+            <div class="history" ng-show="bar_history">
+                <h2>Minhas Atividades</h2>
+                <div ng-show="loading" class='preloader'></div>
+                <div class='history-container' id='history-list'>
+                    <ul>
+                        <li ng-repeat="item in history.items">
+                            <p class="date">{{item.date}}</p>
+                            <h4>{{item.action}}</h4>
+                            <p class="ip">IP: {{item.ip}}</p>
+                            <p class='mode' ng-switch on='item.mode'>
+                                <span class='info' ng-switch-when='info'>Info</span>
+                                <span class='put' ng-switch-when='put'>Atualizar</span>
+                                <span class='insert' ng-switch-when='insert'>Inserir</span>
+                                <span class='del' ng-switch-when='del'>Excluir</span>
+                            </p>
+                            <div class="clearfix clear"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cache" ng-show="bar_cache">
+                <h2>Limpeza de Cache</h2>
+                <form class="form" name="cacheForm" ng-submit="clearCache()">
+                    <div class="form-group">
+                        <p class="text-muted">A limpeza de cache consiste em apagar todos os dados tempor&aacute;rios para forçar a atualização das informações.</p>
+                        <p class="text-danger">Este processo poder&aacute; demorar alguns minutos.</p>
+                        <p class="text-muted last">Última limpeza em {{ cache.date}}</p>
+                    </div>
+                    <button ng-show="cache.isLoad" ng-disabled="loading" type="submit" class="btn btn-warning" ng-bind="loading ? 'Limpando' : 'Limpar Cache' ">Limpar Cache</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Carregador da p&aacute;gina -->
+    <div id="preloader" ng-show="loading" class="animate-show">
+        <div class="msg" ng-class="{show: loading}">{{preloader.message}}</div>
+    </div>
+    <!-- Template do modal de logout -->
+    <script type="text/ng-template" id="ExitModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Efetuar o logout!</h3>
+        </div>
+        <div class="modal-body">
+            Deseja realmente sair do Sistema?
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" ng-click="ok()">Confirmar</button>
+            <button class="btn btn-danger" ng-click="cancel()">Cancelar</button>
+        </div>
+    </script>
+    <script src="vendor/requirejs/require.js"></script>
+    <script type="text/javascript">
+        require(['require', './js/config-require', 'routes'], function (require, config) {
+            window.require.config(config);
+            require(['./js/bootstrap.main.js']);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+[Thu Aug 07 2014 14:13:36 GMT-0300 (BRT)] Layer "arquivo 01.pdf": Unsupported extension: pdf
+[Thu Aug 07 2014 14:13:36 GMT-0300 (BRT)] Layer "imagem 01.jpg copiar": Expected end of input but "c" found.
+[Thu Aug 07 2014 14:13:36 GMT-0300 (BRT)] Layer "imagem 02.jpg copiar": Expected end of input but "c" found.
+[Thu Aug 07 2014 14:13:36 GMT-0300 (BRT)] Layer "artur@tritoq.com": Unsupported extension: com
+[Thu Aug 07 2014 14:13:36 GMT-0300 (BRT)] Layer "artur@tritoq.com": Unsupported extension: com

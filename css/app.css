@@ -1,0 +1,757 @@
+/*## html root ##*/
+
+body, html {
+    height:100%;
+}
+body {
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/** Main Container **/
+#container {
+    height:100%;
+    min-height: 500px;
+}
+
+/** Main Menu **/
+.main-menu.opened {
+    left:0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.main-menu.closed {
+    left:-210px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.main-menu {
+    position:relative;    
+}
+.main-menu ul {
+    list-style: none;
+    margin: 0;    
+    padding:0;
+}
+.main-menu li {
+    margin:0;
+}
+.main-menu li a {
+    padding:8px 5px 8px 25px;
+    display: block;
+    font-family: "Source Sans Pro";
+    font-weight: 300;
+    color:#b7b7b7;
+    border-bottom: #363636 1px solid;
+    font-size:14px;
+    outline: none;
+}
+.main-menu li a.item:hover::before, .main-menu li a.active::before {
+    background: #0f86bd!important;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.main-menu li a.item::before {
+    content: "";
+    width:5px;
+    height:5px;
+    background: #414141;
+    pointer-events: none;
+    position: relative;
+    display: inline-block;
+    margin-left:-18px;
+    margin-right: 18px;
+    top:-3px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.main-menu li a.subitem.opened::before {
+    border-left: 5px solid transparent!important;
+    border-top: 5px solid #0f86bd;
+    border-right: 5px solid transparent;
+    margin-top:7px;
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+}
+.main-menu li a.subitem:hover::after, .main-menu li a.subitem.opened::after {
+    display: inline;
+}
+.main-menu li a.subitem::after {
+    position:absolute;
+    width:10px;
+    right:0px;
+    margin-top:-10px;
+    height: 40px;
+    background: #0f86bd;
+    content: "";
+    display:none;
+}
+.main-menu li a.subitem:hover::before {
+    border-left: 5px solid #0f86bd; 
+}
+.main-menu li a.subitem::before {
+    content: "";
+    width:0;
+    height:0;    
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #414141;    
+    position:absolute;    
+    margin-left:-17px;
+    margin-top:4px;
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+}
+
+.main-menu li a:hover, .main-menu li a.opened, .main-menu li a.active {
+    background-color: black;
+    text-decoration: none;
+}
+.main-menu a.dashboard {
+    background: url("../images/layout-assets/dashboard-menu.svg") no-repeat 5px center;
+    padding-left:25px;
+}
+
+.main-menu .submenu {          
+    overflow: hidden;
+
+    max-height: 0;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.main-menu .submenu.opened {    
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    transition: all 1s ease;
+    max-height: 500px;
+    padding: 0px 0px 10px 15px;
+}
+
+
+/* Bar Down (bottom left) */
+.bar-down {
+    bottom:0px;
+    position:absolute;
+    width:100%;
+    height:40px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    margin-left:0px;
+    width:205px;
+}
+
+.bar-down .bar-menu {
+    list-style: none;
+    padding:0;
+}
+
+.bar-down .bar-menu li {
+    padding:0;
+    margin:0;
+}
+
+.bar-down .bar-menu a {
+    width:40px;
+    height:40px;
+    background:#1e1e1e;
+    display:block;
+    float:left;
+    text-indent: -9999px;
+    margin-left:1px;
+
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.bar-down.opened {
+
+}
+
+.bar-down.closed {
+    margin-left:-163px;
+}
+.bar-down .bar-menu a:hover {
+    background-color: black!important;    
+}
+.bar-down .bar-menu a.user {
+    background: url("../images/layout-assets/user-control.svg") #1e1e1e no-repeat center -21px;
+}
+.bar-down .bar-menu a.user:hover {
+    background-position: center 12px;
+}
+
+.bar-down .bar-menu a.activity {
+    background: url("../images/layout-assets/activity-users.svg") #1e1e1e no-repeat center -32px;
+}
+.bar-down .bar-menu a.activity:hover {
+    background-position: center 9px;
+}
+
+.bar-down .bar-menu a.config {
+    background: url("../images/layout-assets/config.svg") #1e1e1e no-repeat center -20px;
+}
+.bar-down .bar-menu a.config:hover {
+    background-position: center 12px;
+}
+
+.bar-down .bar-menu a.logout {
+    background: url("../images/layout-assets/logout.svg") #1e1e1e no-repeat center -29px;
+    float:right;
+}
+.bar-down .bar-menu a.logout:hover {
+    background-position: center 12px;
+}
+
+/** Slide Left **/
+
+#slide-left, #slide-left.opened {
+    background:#262626;
+    height:100%;
+    padding: 0px;    
+    width:205px;
+    float: left;
+    position: fixed;    
+    -webkit-transition: left 0.5s ease;
+    -moz-transition: left 0.5s ease;
+    -o-transition: left 0.5s ease;
+    transition: left 0.5s ease;
+    left:0px;
+}
+
+#slide-left.closed {
+    left:-160px;            
+}
+
+#slide-left .img-app, #slide-left .img-app.opened {
+    background: url("../images/layout-assets/app.png") no-repeat center center;
+    width: 22px;
+    height: 15px;
+    display: inline-block;
+    padding:20px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;       
+    position: relative;
+    left:0px;
+}
+
+#slide-left .img-app.closed {    
+    left:160px;
+    background: url("../images/layout-assets/app-closed.png") no-repeat center center;        
+}
+
+#slide-left .top-left {
+    padding:0px;
+    border-bottom: 1px solid #494949;
+    overflow: hidden;
+}
+
+#slide-left .user-info {
+    position:absolute;
+    right:0;
+    margin-top: 12px;
+    font-size:12px;
+    color:#494949;   
+    width:120px;    
+    display: inline-block;
+}
+
+/** Slide Right **/
+ 
+#slide-right, #slide-right.opened {
+    min-height: 500px;
+    height:100%;
+    background:#f2f2f2;
+    width:calc(100% - 205px);    
+    position: relative;
+    float:right;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#slide-right>div {
+    height:100%;
+}
+
+#slide-right.closed {
+    width: calc(100% - 45px);
+
+}
+
+/** Notifications **/
+
+.notification, .notification.closed {
+    background: #262626;
+    position:fixed;
+    right:0px;
+    top:0;
+    height:35px;    
+    overflow: hidden;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;    
+}
+
+.notification.opened {
+    right:231px;    
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.notification:hover, .notification.opened {
+    height:177px;    
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.notification:hover a.ico, .notification.opened a.ico {
+    background-position: -25px center;
+    -webkit-transition: background-position 0.2s ease-in-out;
+    -moz-transition: background-position 0.2s ease-in-out;
+    -ms-transition: background-position 0.2s ease-in-out;
+    -o-transition: background-position 0.2s ease-in-out;
+    transition: background-position 0.2s ease-in-out;
+}
+
+.notification .ico {
+    padding:10px;
+    fill:white;
+    background: url("../images/layout-assets/church2.svg") no-repeat 10px center;
+    -webkit-transition: background-position 0.2s ease-in-out;
+    -moz-transition: background-position 0.2s ease-in-out;
+    -ms-transition: background-position 0.2s ease-in-out;
+    -o-transition: background-position 0.2s ease-in-out;
+    transition: background-position 0.2s ease-in-out;
+}
+
+.notification ul.disabled {
+    opacity: 0.2;
+}
+
+.notification ul {
+    list-style: none;
+    padding:0;
+    margin:0;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.notification a {
+    display: block;
+    width:35px;
+    height:35px;
+    text-indent: -9999px;
+    border-bottom:1px solid #393939;
+    outline: none;
+    -webkit-transition: background-position 0.2s ease-in-out;
+    -moz-transition: background-position 0.2s ease-in-out;
+    -ms-transition: background-position 0.2s ease-in-out;
+    -o-transition: background-position 0.2s ease-in-out;
+    transition: background-position 0.2s ease-in-out;
+}
+
+.notification a:hover {
+    background-color: #122526!important;
+    -webkit-transition: background-position 0.2s ease-in-out;
+    -moz-transition: background-position 0.2s ease-in-out;
+    -ms-transition: background-position 0.2s ease-in-out;
+    -o-transition: background-position 0.2s ease-in-out;
+    transition: background-position 0.2s ease-in-out;
+}
+
+.notification a.user {
+    background: url("../images/layout-assets/preferences.svg") no-repeat 9px center;
+}
+
+.notification a.user:hover, .notification a.user.opened {
+    background-position: -19px center;
+}
+
+.notification a.history {
+    background: url("../images/layout-assets/user-history.svg") no-repeat 8px center;
+}
+
+.notification a.history:hover, .notification a.history.opened {
+    background-position: -21px center;
+}
+
+.notification a.dashboard {
+    background: url("../images/layout-assets/my-dashboard.svg") no-repeat 9px center;
+} 
+.notification a.dashboard:hover, .notification a.dashboard.opened {
+    background-position: -24px center;
+} 
+.notification a.cache {
+    background: url("../images/layout-assets/cache-clear.svg") no-repeat 9px center;
+}
+.notification a.cache:hover, .notification a.cache.opened {
+    background-position: -25px center;
+}
+
+/** Bar notifications (OPENED) **/
+
+.bar-notification.opened {
+    right:0;
+    -webkit-transition: right 0.2s ease-in-out;
+    -moz-transition: right 0.2s ease-in-out;
+    -ms-transition: right 0.2s ease-in-out;
+    -o-transition: right 0.2s ease-in-out;
+    transition: right 0.2s ease-in-out;
+}
+
+.bar-notification, .bar-notification.closed {
+    background:#262626;    
+    width:230px;
+    position:fixed;
+    right:-230px;
+    height:100%;
+    padding:5px;
+    margin:0px;    
+    -webkit-transition: right 0.2s ease-in-out;
+    -moz-transition: right 0.2s ease-in-out;
+    -ms-transition: right 0.2s ease-in-out;
+    -o-transition: right 0.2s ease-in-out;
+    transition: right 0.2s ease-in-out;
+}
+
+.bar-notification h2 {
+    color:#4cd4ac;
+    font-size:20px;    
+    font-weight: 500;
+    text-align: center;
+    margin:0;
+}
+
+.bar-notification .user form {
+    margin-top:20px;
+    padding:0px 10px;
+}
+
+.bar-notification .user label {
+    color:#c7c7c7;    
+}
+
+.bar-notification .user input.form-control {
+    background: #404040;
+    color:white;
+    font-family: "Source Sans Pro";
+    border:none;
+}
+
+.bar-notification #msg {
+    padding:5px;
+    font-size:12px;        
+    text-align: center;
+    width:230px;
+    font-weight: bold;
+    background:black center center;
+    position:absolute;
+    height:230px;
+    -webkit-transition:all ease 0.5s;
+    -moz-transition:all ease 0.5s;
+    -o-transition:all ease 0.5s;
+    transition:all ease 0.5s;
+    right: 0px;
+    bottom:0px;
+    z-index:9999;
+}
+
+.bar-notification #msg.closed {    
+    bottom:-300px;
+}
+
+.bar-notification #msg.error {    
+    background: url(../images/layout-assets/error.svg) no-repeat center center #ff4545;
+    text-indent: -9999px;
+}
+
+.bar-notification #msg.success {
+    background: url(../images/layout-assets/checked.svg) no-repeat center center #4cd4ac;
+    text-indent: -9999px;
+}
+
+.bar-notification button.btn:disabled {
+    background: #717171;
+    border:1px solid #717171;
+}
+
+.bar-notification .history-container ul li p.mode{
+    float:right;
+    font-size:11px;
+}
+
+.bar-notification .history-container ul li p.mode span.insert {
+    color:#8ac96b;
+}
+
+.bar-notification .history-container ul li p.mode span.del {
+    color: #c96b6b;
+}
+
+.bar-notification .history-container ul li p.mode span.put {
+    color:#a06bc9;
+}
+
+.bar-notification .history-container ul li p.mode span.info {
+    color:#6bbdc9;
+}
+
+.bar-notification .history-container ul li p.ip{
+    font-size:11px;
+    color:#4cd4ac;
+    float:left;
+}
+
+.bar-notification .history-container ul li p.date{
+    font-size:12px;
+    color: #7b7b7b;
+}
+
+.bar-notification .history-container ul li {
+    margin:0;
+    border-bottom:1px solid #5a5a5a;
+}
+
+.bar-notification .history-container ul li h4 {
+    font-size:14px;
+    color:#a6a6a6;
+    line-height: 18px;
+}
+
+.bar-notification .history-container {    
+    height: calc(100% - 20px);
+    overflow:hidden;
+    width:100%;
+    position: absolute;
+    margin-left: -5px;
+}
+
+.bar-notification .history-container ul {
+    position:absolute;
+    z-index: 1;
+    list-style: none;
+    margin:0;
+    padding:10px;
+    display:block;
+    width:100%;
+}
+
+.bar-notification .preloader {
+    background: url('../images/rightbar-preloader.gif') no-repeat center center;
+    width:40px;
+    height:30px;
+    margin: 0 auto;
+    margin-top:20px;
+    opacity: 0.9;
+}
+
+.bar-notification .dashboard {
+    padding:0px 5px;
+}
+
+.bar-notification .dashboard-list {
+    list-style: none;
+    margin:30px 0;
+    padding: 0;
+}
+
+.bar-notification .dashboard-list li {
+    overflow: hidden;
+    -webkit-transition:background ease 0.5s;
+    -moz-transition:background ease 0.5s;
+    -o-transition:background ease 0.5s;
+}
+
+.bar-notification .dashboard-list li.mousedown {
+    background: #d5c34c!important;    
+}
+
+.bar-notification .dashboard-list li:hover {
+    background: #41a1af;
+}
+
+.bar-notification .dashboard-list li{
+    border: 1px solid rgba(0,0,0,0.1);
+    padding:10px;
+    float:left;
+    display: block;
+    background:#6bbdc9;
+    width:100%;    
+    font-size:14px;    
+}
+
+.bar-notification .dashboard-list li label {
+    font-size:12px;
+}
+
+.bar-notification .history-container ul::-webkit-scrollbar { 
+    display: none; 
+}
+
+.bar-notification .cache form {
+    margin: 30px 5px;
+    font-size:14px;
+    color:#898989;
+}
+
+.bar-notification .cache .last {
+    font-size:12px;
+}
+
+/* Preloader */
+
+#preloader {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0px;
+    background: #3b3b3b url(../images/main-preloader.gif) no-repeat center center;    
+    z-index:9999;
+    
+    
+}
+
+#preloader .ico {
+    position: relative;
+    top:50%;
+    width:20px;
+    height:20px;
+    background: url(../images/login-preloader.gif) no-repeat center top;
+    width:100%;
+}
+#preloader .msg.show {
+    text-indent: 0px;
+}
+#preloader .msg {
+    color:white;
+    font-size:12px;        
+    text-align: center;
+    position:absolute;
+    top:50%;
+    width:100%;
+    padding-top:20px;
+    text-indent: -99999px;
+}
+
+/* CSS animations effects */
+.animate-show.ng-hide-add, 
+.animate-show.ng-hide-remove {
+    opacity: 0.98%;
+    -webkit-transition:all ease 1s;
+    -moz-transition:all ease 1s;
+    -o-transition:all ease 1s;
+    transition:all ease 1s;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove {    
+    opacity:0;    
+    -webkit-transition:all ease 1s;
+    -moz-transition:all ease 1s;
+    -o-transition:all ease 1s;
+    transition:all ease 1s;
+}
+
+.animate-show.ng-hide-add,
+.animate-show.ng-hide-remove.ng-hide-remove-active {    
+    opacity:0.98;         
+    -webkit-transition:all ease 1s;
+    -moz-transition:all ease 1s;
+    -o-transition:all ease 1s;
+    transition:all ease 1s;
+}
+
+/* Exit Modal Dialog */
+
+.exitDialog .modal-dialog{
+    width:350px;
+}
+
+.exitDialog .modal-content {
+    background: #3b3b3b;
+    font-family: "Source Sans Pro";
+    font-weight: 200;
+    color:white;
+}
+
+.exitDialog .modal-footer {
+    border-top: 1px solid #292929;
+}
+
+.exitDialog .modal-header {
+    border-bottom:1px solid #292929;
+}
+
+.exitDialog .modal-dialog h3 {
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    color:#0f86bd;
+}
+
+/* Strength Password Component */
+
+input.ng-pristine + ul#strength {
+    display:none;
+}
+ul#strength {    
+    list-style:none;
+    margin:0;
+    margin-top:10px;
+    margin-bottom: 10px;
+    clear:both;
+    padding:0;    
+    vertical-align:2px;    
+    float:left;
+}
+ul#strength .point:last {
+    margin:0 !important;
+}
+ul#strength .point {
+    padding:0;
+    background:#DDD;
+    border-radius:2px;
+    display:inline-block;
+    height:5px;
+    margin-right:1px;
+    width:20px;
+}

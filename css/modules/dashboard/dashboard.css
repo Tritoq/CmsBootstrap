@@ -1,0 +1,64 @@
+/* Dashboard */
+.square {
+    min-height: 400px;    
+    background-color: white;
+    margin:0px;
+    border: 1px solid #f2f2f2;
+    height:50%;
+}
+
+.square h2 {
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    font-size:24px;
+    color: #0f86bd;
+}
+
+#ga-chart {
+    width:100%;    
+    height:calc(100%);
+    overflow: hidden;
+}
+
+.crud-snapshot .container {
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+.crud-snapshot .wrapper {
+    height: calc(100% - 110px);
+    position: relative;
+    overflow:hidden;    
+    margin-bottom: 10px;
+}
+
+.crud-snapshot table tr:hover td {
+    background-color:#e5e5e5;
+}
+
+.crud-snapshot table td.update a {
+    display: block;
+    height:35px;
+    text-indent: -9999px;
+    background: url(../../../images/layout-assets/update-arrow.svg) no-repeat center -17px;
+    -webkit-transition: background-position 0.2s ease-in-out;
+    -moz-transition: background-position 0.2s ease-in-out;
+    -ms-transition: background-position 0.2s ease-in-out;
+    -o-transition: background-position 0.2s ease-in-out;
+    transition: background-position 0.2s ease-in-out;
+}
+.crud-snapshot table td.update a:hover {
+    background-position: center 11px;
+}
+.crud-snapshot table td.update {
+    width:30px;
+    padding:0;
+}
+.crud-snapshot h5 {
+    float:right;
+    color:#9f9f9f;
+    margin-top:25px;
+}
+.crud-snapshot h2 {
+    float:left;
+}

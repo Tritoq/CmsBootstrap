@@ -1,0 +1,25 @@
+{
+    "name": "Content Manager Software",
+    "version": "1.0",
+    "dependencies": {
+        "angular": "latest",
+        "angular-animate": "latest",
+        "angular-resource": "latest",
+        "angular-route": "latest",
+        "angular-bootstrap": "latest",
+        "angular-mocks": "latest",
+        "bootstrap": "latest",
+        "jquery": "latest",
+        "jquery-ui": "latest",
+        "iscroll": "latest",
+        "requirejs": "latest",
+        "requirejs-domready": "latest"
+    },
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}

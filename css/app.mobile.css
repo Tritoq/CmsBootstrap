@@ -1,0 +1,44 @@
+@media (max-width: 1200px) {
+    
+    /* ## Slide Left ##*/
+    
+    #slide-left {
+               
+        -webkit-transition: left 0.5s ease;
+        -moz-transition: left 0.5s ease;
+        -o-transition: left 0.5s ease;
+        transition: left 0.5s ease;
+        background-image: url(../images/layout-assets/scrolling.svg);
+        background-position: 175px center;
+        background-repeat: no-repeat;
+        
+    }
+    
+    /*## Slide Right ##*/
+    
+    #slide-right {
+        width: calc(100% - 25px);
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }    
+    
+    /*## Tooltip Component ##*/
+    
+    .tooltip {
+        display: none!important;
+    }    
+}
+
+@media (max-width:500px) {
+    
+    /*## Exit Dialog Component ##*/
+    
+    .exitDialog .modal-dialog{
+        width:250px!important;
+        margin-top:20px;
+        margin-left:auto;
+        margin-right: auto;
+    }
+}

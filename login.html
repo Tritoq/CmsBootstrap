@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login | Administração de Conteúdo</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Project Default CSS -->
+    <link href="css/panel.ui.css" rel="stylesheet" type="text/css">
+    <!-- Page CSS -->
+    <link href="css/modules/login/login.css" rel="stylesheet" type="text/css">
+
+</head>
+<body ng-controller='ApplicationController'>
+    <div class="clearfix">
+        <!-- Box Login -->
+        <div class="box-login">
+            <h1>
+                Administração de <br/> <span class="strong">Conteúdo</span>
+            </h1>
+            <!-- Area Form -->
+            <div class="area-login">
+                <form role="form" novalidate action="" name="loginForm" class="form clearfix" ng-controller="LoginController" ng-submit="login(credentials, loginForm.$valid)">
+                    <fieldset ng-disabled="loading">
+                        <div class="form-group">
+                            <label for="username">Nome de Usuário</label>
+                            <input ng-minlength=3 type="text" id="username" name="username" ng-model="credentials.username" placeholder="Ex: nomedeusuario" class="form-control" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input type="password" ng-minlength=5 id="password" ng-model="credentials.password" name="password" placeholder="Ex: senha" class="form-control" required />
+                        </div>
+
+                        <div class="form-group row-submit">
+                            <button type="submit" class="btn btn-primary bt-green">Entrar</button>
+                            <div class='preloader' ng-show="loading" id='preloader' ng-cloak>Carregando</div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" ng-model="credentials.active" name="active" value="true" /> Manter conectado</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <!-- End Area Form -->
+            <div class="msg-error-dark fadein fadeout" ng-show="error" ng-cloak >
+                Credenciais Inválidas
+            </div>
+            <div class="msg-warning-dark ng-hide" ng-show='warning' ng-cloak>
+                Problemas com a senha? <a href="">Solicitar atualização</a> de senha
+            </div>
+
+        </div>
+
+    </div>
+<script src="vendor/requirejs/require.js"></script>
+    <script type="text/javascript">
+        require(['require', './js/config-require', 'routes'], function (require, config) {
+            window.require.config(config);
+            require(['./js/bootstrap.login.js']);
+        });
+    </script>
+</body>
+</html>
