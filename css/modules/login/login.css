@@ -40,12 +40,12 @@ form label {
     margin-bottom: 20px;    
 }
 
-form input[type="text"].form-control, form input[type="password"].form-control {
+form input[type="text"].form-control, form input[type="password"].form-control, form input[type="email"].form-control {
     background: #262626;
     border-color: #262626;
 }
 
-form input[type="text"].form-control:focus, form input[type="password"].form-control:focus {
+form input[type="text"].form-control:focus, form input[type="password"].form-control:focus, form input[type="email"].form-control:focus {
     color:#3db298;
 }
 
@@ -124,6 +124,45 @@ div.preloader {
     form {            
         padding:35px 5px 5px 5px;
     }
+
+    .passwordDialog .modal-dialog{
+        width:250px!important;
+        margin-top:20px;
+        margin-left:auto;
+        margin-right: auto;
+    }
 }
 
+/**
+Password dialog
+**/
+.passwordDialog form {
+    padding:10px;
+}
+.passwordDialog .modal-dialog{
+    width:450px;
+}
 
+.passwordDialog .modal-content {
+    background: #3b3b3b;
+    font-family: "Source Sans Pro";
+    font-weight: 200;
+    color:white;
+}
+
+.passwordDialog .modal-footer {
+    border-top: 1px solid #292929;
+}
+
+.passwordDialog .modal-header {
+    border-bottom:1px solid #292929;
+}
+
+.passwordDialog .modal-dialog h3 {
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    color:#0f86bd;
+}
+.passwordDialog .msg {
+    padding: 10px 0px;
+}

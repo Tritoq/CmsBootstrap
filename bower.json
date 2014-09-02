@@ -6,6 +6,8 @@
         "angular-animate": "latest",
         "angular-resource": "latest",
         "angular-route": "latest",
+        "angular-ui-router": "latest",
+        "angular-grid": "latest",
         "angular-bootstrap": "latest",
         "angular-mocks": "latest",
         "bootstrap": "latest",

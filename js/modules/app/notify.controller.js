@@ -1,7 +1,7 @@
 /**
  * Created by arturmagalhaes on 21/08/14.
  */
-define(['./module'], function (module) {
+define(['./module', 'routes'], function (module, routes) {
     'use strict';
 
     module.controller("NotificationController", function ($scope, $rootScope, $http, $timeout, NOTIFY_EVENTS, Mobile) {
@@ -92,7 +92,7 @@ define(['./module'], function (module) {
         /** Listeners **/
 
         $rootScope.$on(NOTIFY_EVENTS.loadHistory, function (e) {
-            var request = $http({'method': 'GET', url: 'data/history.php'});
+            var request = $http({'method': 'GET', url: routes.history});
             request.then(function (e) {
                 $scope.history.items = e.data;
                 $scope.isLoading(false);
@@ -120,7 +120,7 @@ define(['./module'], function (module) {
                 case 'user':
                     if(!$scope.user.isLoad) {
                         $scope.isLoading(true);
-                        var request = $http({'method': 'GET', url: 'data/user-data.php'});
+                        var request = $http({'method': 'GET', url: routes.userData});
                         request.then(function (e) {
                             $scope.user = e.data.user;
                             $scope.isLoading(false);
@@ -142,7 +142,7 @@ define(['./module'], function (module) {
                 case 'dashboard':
                     if(!$scope.dashboard.isLoad) {
                         $scope.isLoading(true);
-                        var request = $http({'method': 'GET', url: 'data/dashboard.php'});
+                        var request = $http({'method': 'GET', url: routes.dashboardData});
                         request.then(function (e) {
                             $scope.dashboard.items = e.data;
                             $scope.isLoading(false);
@@ -165,7 +165,7 @@ define(['./module'], function (module) {
                 case 'cache':
                     if(!$scope.cache.isLoad) {
                         $scope.isLoading(true);
-                        var request = $http({'method': 'GET', url: 'data/clear-cache.php'});
+                        var request = $http({'method': 'GET', url: routes.clearCache});
                         request.then(function (e) {
                             $scope.cache = e.data.cache;
                             $scope.isLoading(false);
@@ -183,7 +183,7 @@ define(['./module'], function (module) {
         /** Methods / Actions **/
 
         $scope.clearCache = function () {
-            var request = $http({method: "PUT", url: "data/clear-cache.php"});
+            var request = $http({method: "PUT", url: routes.clearCache});
             $scope.isLoading(true);
             request.then(function (response) {
                 $scope.isLoading(false);
@@ -196,7 +196,7 @@ define(['./module'], function (module) {
         };
 
         $scope.updateDashboard = function (list) {
-            var request = $http({method: "PUT", url: "data/dashboard.php", data: list});
+            var request = $http({method: "PUT", url: routes.dashboardData, data: list});
             $scope.isLoading(true);
             request.then(function (response) {
                 $scope.isLoading(false);
@@ -211,7 +211,7 @@ define(['./module'], function (module) {
         $scope.updateUser = function (user, isValid) {
 
             if(isValid) {
-                var request = $http({method: "PUT", url: "data/user-data.php", data: user});
+                var request = $http({method: "PUT", url: routes.userData, data: user});
                 $scope.isLoading(true);
                 request.then(function (response) {
                     $scope.isLoading(false);

@@ -1,0 +1,81 @@
+.crud .bar {
+    background:#e4e4e4;
+    padding:5px 10px;
+}
+.crud .bar h1 {
+    margin:0;
+    padding:0;
+    font-family: 'Source Sans Pro';
+    font-weight: 400;
+    font-size:24px;
+    color:#9a9c9b;
+}
+
+.crud-container {
+    margin:3px 0px;
+}
+
+.crud-container .content {
+    min-height: 800px;
+    background: white;
+}
+
+.crud-container .tab {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.crud-container .tab a {
+    float:left;
+    padding:6px 40px;
+    background: #fbfbfb;
+    border:1px solid #ececec;
+    margin-right: -10px;
+    position: relative;
+    z-index: 1;
+    font-size:14px;
+    font-family: 'Source Sans Pro';
+
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.crud-container .tab a.insert {
+    z-index: 4;
+    color:#76bfa4;
+}
+.crud-container .tab a.search {
+    z-index: 2;
+    color:#73c8dc;
+}
+.crud-container .tab a.update {
+    z-index: 3;
+    color:#cca272;
+}
+.crud-container .tab a.view {
+    z-index: 5;
+}
+
+
+
+.crud-container .tab a:hover, .crud-container .tab a.selected {
+    background: #acacac;
+    color:white;
+    text-decoration: none;
+}
+
+.crud-container .datagrid .ngRow.selected {
+    background: #a6e2fe;
+}
+.crud-container .datagrid .ngCellText {
+    font-size:12px;
+}
+.crud-container .datagrid {
+    height: 600px;
+}

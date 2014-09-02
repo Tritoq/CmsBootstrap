@@ -4,10 +4,13 @@
 define([
     'angular',
     'routes',
-    'ngAnimate'
+    'ngAnimate',
+    'jquery-ui',
+    'ui.bootstrap',
+    'ui.bootstrap.tpls'
 ], function (angular, routes) {
     'use strict';
-    var $app = angular.module('app.login', ['ngAnimate']);
+    var $app = angular.module('app.login', ['ngAnimate', 'ui.bootstrap']);
 
 
     /*

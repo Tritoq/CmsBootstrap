@@ -2,9 +2,14 @@
  * Created by arturmagalhaes on 21/08/14.
  */
 define({
+    'login': 'login.html',
+    'app': 'app.html',
     'auth': 'data/auth.php',
-    'crud-data': 'data/crud-data.php',
-    'clear-cache': 'data/clear-cache.php',
+    'recoveryPassword': 'data/recovery.php',
+    'crudData': 'data/crud-data.php',
+    'dashboardData': 'data/dashboard.php',
+    'clearCache': 'data/clear-cache.php',
     'history': 'data/history.php',
-    'user-data': 'data/user-data.php'
+    'userData': 'data/user-data.php',
+    'datagrid': 'data/datagrid.php'
 });

@@ -1,11 +1,11 @@
-define(['./module', 'config'], function (module, config) {
+define(['./module', 'config', 'routes'], function (module, config, routes) {
     'use strict';
 
     /** Exit Modal Controller **/
     var ExitModalInstanceCtrl = function ($scope, $window, $modalInstance) {
 
         $scope.ok = function () {
-            $window.location.href = "login.html";
+            $window.location.href = routes.login;
             $modalInstance.close($scope.selected.item);
         };
 
@@ -150,9 +150,28 @@ define(['./module', 'config'], function (module, config) {
             }
         });
 
+        $scope.currentModule = null;
+
         $scope.$on('$routeChangeStart', function (next,current) {
 
-            $scope.showLoading();
+
+            if(document.body.clientWidth < APP.closeWidth) {
+                $scope.open = false;
+                $scope.notify = false;
+            }
+
+
+            if(current.params.module) {
+                if($scope.currentModule != current.params.module) {
+                    $scope.showLoading();
+                    $scope.currentModule = current.params.module;
+                }
+            } else {
+                $scope.showLoading();
+            }
+
+            console.info(current);
+
             $('.main-menu a').removeClass('active');
 
             if(current.params.module) {

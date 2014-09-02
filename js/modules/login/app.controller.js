@@ -1,15 +1,53 @@
 /**
  * Created by arturmagalhaes on 20/08/14.
  */
-define(['./module'], function(module) {
+define(['./module', 'routes'], function(module, routes) {
     'use strict';
 
-    module.controller('ApplicationController', ['$scope', '$rootScope', '$timeout', '$window', 'AuthService', 'AUTH_EVENTS', 'USER_ROLES', function($scope, $rootScope, $timeout, $window, AuthService, AUTH_EVENTS, USER_ROLES) {
+
+    var PasswordModalInstanceCtrl = function ($scope, $rootScope, $http, $timeout, $window, $modalInstance) {
+
+
+        $scope.recovery = {};
+
+        $scope.rloading = false;
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+        $scope.send = false;
+
+        $scope.getPassword = function (recovery, isValid) {
+            if(isValid) {
+                $scope.rloading = true;
+                var request = $http({'url': routes.recoveryPassword, 'method': 'post', 'data': recovery});
+                request.then(function (res) {
+                    $scope.rloading = false;
+                    if(res.data.send == 'ok') {
+                        $scope.rmsg = 'E-mail enviado, leia as instruções que lhe foram enviadas';
+                        $scope.send = true;
+                        $timeout(function () {
+                            $scope.rmsg = false;
+
+                            $modalInstance.dismiss('cancel');
+                        }, 10000);
+                    }
+                }, function () {
+                    $scope.rmsg = 'Erro ao enviar e-mail';
+                    $scope.rloading = false;
+                    $scope.send = false;
+                });
+            }
+        };
+    };
+
+    module.controller('ApplicationController', ['$scope', '$rootScope', '$timeout', '$window', '$modal', '$http', 'AuthService', 'AUTH_EVENTS', 'USER_ROLES', function($scope, $rootScope, $timeout, $window, $modal, $http, AuthService, AUTH_EVENTS, USER_ROLES) {
 
         $scope.currentUser = null;
         $scope.userRoles = USER_ROLES;
         $scope.isAuthorized = AuthService.isAuthorized;
         $scope.loading = false;
+
 
         $scope.error = false;
         $scope.warning = false;
@@ -17,6 +55,7 @@ define(['./module'], function(module) {
         $scope.intervalId = null;
 
         $scope.attempt = 0;
+
 
         $scope.setCurrentUser = function (user) {
             $scope.currentUser = user;
@@ -49,9 +88,26 @@ define(['./module'], function(module) {
         });
 
         $rootScope.$on(AUTH_EVENTS.loginSuccess, function (event,data) {
-            $window.location.href = "app.html";
+            $window.location.href = routes.app;
             //$scope.loading = false;
         });
 
+
+        $scope.password = function () {
+            var modalInstance = $scope.modalInstance = $modal.open({
+                templateUrl: 'PasswordModalContent.html',
+                controller: PasswordModalInstanceCtrl,
+                resolve: {},
+                windowClass: "modal passwordDialog"
+            });
+
+            $timeout(function () {
+                $('#remail').focus();
+            }, 200);
+
+        };
+
+
+        $timeout(function () { $('#username').focus(); }, 500);
     }]);
 });

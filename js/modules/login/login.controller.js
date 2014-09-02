@@ -35,8 +35,7 @@ define(['./module'], function (module) {
                     $scope.error = true;
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 }
-            }
-
+            };
 
             AuthService.login(credentials).then(function (user) {
                 if(user.data.auth_result) {

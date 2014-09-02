@@ -9,6 +9,7 @@ define([
     'jquery-ui',
     'iscroll',
     'ngRoute',
+    'ngGrid',
     'ui.bootstrap',
     'ui.bootstrap.tpls'
 
@@ -17,7 +18,7 @@ define([
     'use strict';
 
 
-    var $app = angular.module('app.main', ['ngAnimate', 'ngRoute', 'ui.bootstrap']);
+    var $app = angular.module('app.main', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngGrid']);
 
     // Configuration App
 
@@ -44,7 +45,7 @@ define([
         /** Routes **/
 
         $routeProvider.when('/', {
-            templateUrl: config.view.get('dashboard', 'php'),
+            templateUrl: config.view.get('dashboard'),
             controller: 'dashboardController',
             resolve: {
                 load: ['$q', '$rootScope', function ($q, $rootScope) {
@@ -60,23 +61,23 @@ define([
             }
         });
 
-        $routeProvider.when('/:module.crud', {
-            templateUrl: config.view.get('crud', 'php'),
-            controller: 'crudController',
-            resolve: {
-                load: function ($route, $q, crudDataService) {
 
-                    var defer = $q.defer();
-
-                    require([config.js.get('crud')], function () {
-                        var data = crudDataService.load($route.current.params.module, defer);
-                    });
-
-                    return defer.promise;
-                    //var
-                    //return data;
-                }
+        var resolve = {
+            load: function ($route, $q, crudDataService) {
+                var defer = $q.defer();
+                require([config.js.get('crud')], function () {
+                    var data = crudDataService.load($route.current.params.module, defer);
+                });
+                return defer.promise;
+                //var
+                //return data;
             }
+        };
+
+        $routeProvider.when('/:module.crud', {
+            templateUrl: config.view.get('crud'),
+            controller: 'crudController',
+            resolve: resolve
         });
 
     }]);
@@ -111,32 +112,42 @@ define([
     $app.factory('crudDataService', function ($http, $q) {
         return {
             data: {},
+            lastModule: null,
             load: function (mod, defer) {
 
-                var deferredAbort = $q.defer();
-                var request = $http({method: "post", data: {'module': mod}, url: "data/crud-data.php", timeout: deferredAbort.promise});
-                var service = this;
+                if(mod != this.lastModule) {
 
-                var promise = request.then(function (response) {
-                    service.data = response.data;
+                    this.lastModule = mod;
+
+                    var deferredAbort = $q.defer();
+                    var request = $http({method: "post", data: {'module': mod}, url: routes.crudData, timeout: deferredAbort.promise});
+                    var service = this;
+
+                    var promise = request.then(function (response) {
+                        service.data = response.data;
+                        defer.resolve();
+                        return (response.data);
+                    }, function (response) {
+                        return ($q.reject('Error'));
+                    });
+
+                    promise.abort = function () {
+                        deferredAbort.resolve();
+                    }
+
+                    promise.finally(
+                        function() {
+                            promise.abort = angular.noop;
+                            deferredAbort = request = promise = null;
+                        }
+                    );
+                    return promise;
+                } else {
                     defer.resolve();
-                    return (response.data);
-                }, function (response) {
-                    return ($q.reject('Error'));
-                });
 
-                promise.abort = function () {
-                    deferredAbort.resolve();
+                    return defer.promise;
                 }
 
-                promise.finally(
-                    function() {
-                        promise.abort = angular.noop;
-                        deferredAbort = request = promise = null;
-                    }
-                );
-
-                return promise;
             }
         };
     });

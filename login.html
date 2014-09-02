@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Login | Administração de Conteúdo</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
+
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
@@ -46,13 +48,33 @@
             <div class="msg-error-dark fadein fadeout" ng-show="error" ng-cloak >
                 Credenciais Inválidas
             </div>
-            <div class="msg-warning-dark ng-hide" ng-show='warning' ng-cloak>
-                Problemas com a senha? <a href="">Solicitar atualização</a> de senha
+            <div class="msg-warning-dark" ng-show='warning' ng-cloak >
+                Problemas com a senha? <a href="" ng-click="password()"  ng-cloak>Solicitar atualização</a> de senha
             </div>
 
         </div>
 
     </div>
+    <script type="text/ng-template" id="PasswordModalContent.html">
+        <form class="form" ng-submit="getPassword(recovery, passwordForm.$valid)" name="passwordForm">
+        <div class="modal-header">
+            <h3 class="modal-title">Recuperar a senha</h3>
+        </div>
+        <div class="modal-body">
+                <p>Para recuperar a senha, digite seu e-mail abaixo:</p>
+                <input type="email" id="remail" placeholder="Seu e-mail" name="email" ng-model="recovery.email" class="form-control" required />
+                <div id="msg" class="msg" ng-show="rmsg" ng-class="{'text-primary': send, 'text-danger': !send}">
+                    <span>{{rmsg}}</span>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <div class='preloader' id='recovery-preloader' ng-show="rloading">Carregando</div>
+
+            <button class="btn btn-success" type="submit" ng-hide="rloading || send" ng-disabled="passwordForm.$invalid">Confirmar</button>
+            <button class="btn btn-danger" ng-click="cancel()" ng-hide="rloading || send">Cancelar</button>
+        </div>
+        </form>
+    </script>
 <script src="vendor/requirejs/require.js"></script>
     <script type="text/javascript">
         require(['require', './js/config-require', 'routes'], function (require, config) {

@@ -20,6 +20,9 @@ define({
         'ngRoute'         : 'vendor/angular-route/angular-route',
         'ui.bootstrap'    : 'vendor/angular-bootstrap/ui-bootstrap',
         'ui.bootstrap.tpls': 'vendor/angular-bootstrap/ui-bootstrap-tpls',
+        'ui.router'       : 'vendor/angular-ui-router/release/angular-ui-router',
+        'ngGrid'          : 'vendor/angular-grid/build/ng-grid',
+        'ngGridLayout'    : 'vendor/angular-grid/plugins/ng-grid-layout',
         'lazyload'        : 'js/components/lazy/lazyload',
         'config'          : 'js/config/application'
     },
@@ -29,12 +32,14 @@ define({
             'deps': ['jquery'],
             'exports': 'angular'
         },
-        'jquery-ui': ['jquery'],
-        'ngAnimate':  ['angular'],
-        'ngResource': ['angular'],
-        'ngRoute':    ['angular'],
-        'ui.router':  ['angular'],
-        'ui.bootstrap': ['angular'],
-        'ui.bootstrap.tpls': ['angular']
+        'jquery-ui':            ['jquery'],
+        'ngAnimate':            ['angular'],
+        'ngResource':           ['angular'],
+        'ngRoute':              ['angular'],
+        'ngGrid':               ['angular'],
+        'ngGridLayout':         ['angular'],
+        'ui.router':            ['angular'],
+        'ui.bootstrap':         ['angular'],
+        'ui.bootstrap.tpls':    ['angular']
     }
 });
