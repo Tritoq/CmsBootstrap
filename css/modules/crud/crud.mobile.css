@@ -1,0 +1,20 @@
+@media (max-width: 768px) {
+    .crud-container .tab a {
+        padding: 6px 6px;
+        width: auto;
+        font-size:12px;
+    }
+    .crud-container .stats {
+        width:100%;
+        border-top:1px solid  #b9b9b9;
+    }
+    .crud-container td {
+        max-width: 150px;
+        overflow: hidden;
+        white-space: nowrap;
+
+    }
+    .crud-container td.option, .crud-container th.option, .crud-container li.option {
+        display:none;
+    }
+}

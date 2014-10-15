@@ -10,6 +10,7 @@
         "angular-grid": "latest",
         "angular-bootstrap": "latest",
         "angular-mocks": "latest",
+        "angular-route-segment": "latest",
         "bootstrap": "latest",
         "jquery": "latest",
         "jquery-ui": "latest",

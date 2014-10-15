@@ -1,18 +1,20 @@
 .crud .bar {
-    background:#e4e4e4;
-    padding:5px 10px;
+    background:white;
+    padding:10px 10px;
 }
 .crud .bar h1 {
     margin:0;
     padding:0;
     font-family: 'Source Sans Pro';
-    font-weight: 400;
-    font-size:24px;
-    color:#9a9c9b;
+    font-weight: 100;
+    font-size:40px;
+    color: #1d1f1e;
+    text-align: center;
+    letter-spacing: -2px;
 }
 
 .crud-container {
-    margin:3px 0px;
+    margin:-5px 0px;
 }
 
 .crud-container .content {
@@ -25,14 +27,18 @@
     padding: 0;
     margin: 0;
     overflow: hidden;
+    border-bottom:1px solid #e7e7e7;
 }
 
 .crud-container .tab a {
     float:left;
-    padding:6px 40px;
+    padding:6px 6px;
+    width:100px;
+    text-align: center;
     background: #fbfbfb;
     border:1px solid #ececec;
-    margin-right: -10px;
+    border-bottom: none;
+
     position: relative;
     z-index: 1;
     font-size:14px;
@@ -44,6 +50,13 @@
     -moz-border-radius-topright: 5px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    outline: none;
+
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .crud-container .tab a.insert {
@@ -58,6 +71,11 @@
     z-index: 3;
     color:#cca272;
 }
+.crud-container .tab a.config {
+    z-index: 3;
+    color: #3d3d3d;
+    float:right;
+}
 .crud-container .tab a.view {
     z-index: 5;
 }
@@ -65,7 +83,7 @@
 
 
 .crud-container .tab a:hover, .crud-container .tab a.selected {
-    background: #acacac;
+    background: #4a4a4a;
     color:white;
     text-decoration: none;
 }
@@ -73,9 +91,256 @@
 .crud-container .datagrid .ngRow.selected {
     background: #a6e2fe;
 }
+.crud-container .datagrid .ngHeaderText {
+    font-size:12px;
+    color:#5b5b5b;
+}
 .crud-container .datagrid .ngCellText {
     font-size:12px;
+    line-height: 20px;
+    color:#5b5b5b;
 }
 .crud-container .datagrid {
     height: 600px;
 }
+.crud-container .table-datagrid .cellOptions button {
+    border:0;
+    text-indent: -9999px;
+    float:left;
+    width:30px;
+    height:31px;
+    display:inline-block;
+    margin-right: 1px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.crud-container .table-datagrid .cellOptions button.attach:hover {
+    background-position: center 7px;
+    background-color: #c104e3;
+}
+.crud-container .table-datagrid .cellOptions button.attach {
+    background: url(../../../images/layout-assets/attach.svg)  no-repeat center -40px;
+}
+.crud-container .table-datagrid .cellOptions button.update:hover {
+    background-position: center 7px;
+    background-color: #de6800;
+}
+.crud-container .table-datagrid .cellOptions button.update {
+    background: url(../../../images/layout-assets/update.svg)  no-repeat center -21px;
+}
+.crud-container .table-datagrid .cellOptions button.delete:hover {
+    background-position: center 7px;
+    background-color: #c50000;
+}
+.crud-container .table-datagrid .cellOptions button.delete {
+    background: url(../../../images/layout-assets/delete.svg)  no-repeat center -35px;
+}
+
+.crud-container .table-datagrid .cellOptions .attachNumber {
+    width:25px;
+    font-size: 10px;
+    line-height: 30px;
+    text-align: center;
+    height:31px;
+    display:inline-block;
+    float:right;
+    margin:0px;
+    cursor: default;
+    margin-left:-5px;
+    color:  white;
+    background: #d1d1d1;
+}
+
+.crud-container .loader {
+    background: url(../../../images/layout-assets/crud-preloader.gif) no-repeat center center;
+    text-indent: -99999px;
+    width:100px;
+    height: 100px;
+    margin: 0 auto;
+    margin-top:150px;
+    margin-bottom: 300px;
+}
+
+.crud-container #grid-container {
+    background: #f2f2f2;
+}
+
+.crud-container .table-datagrid td {
+    font-size:12px;
+    padding:4px;
+    border-bottom: 1px solid white;
+    color: #494949;
+}
+.crud-container .table-datagrid td.option {
+    padding:0;
+}
+
+.crud-container .table-datagrid tr:nth-child(odd) td{
+    /* styles here */
+    background: #ececec;
+}
+
+
+.crud-container .table-datagrid tr.selected td {
+    background: #a6e1fd;
+}
+.crud-container .table-datagrid tr:hover td  {
+    background: #d4d4d4;
+}
+.crud-container .table-datagrid th, .crud-container .header-fixed {
+    background: #e5e5e5;
+    padding:4px;
+    font-size:14px;
+    font-family: 'Source Sans Pro';
+    font-weight: 400;
+    border-bottom: 1px solid #c6c6c6;
+}
+.crud-container .table-datagrid th.option {
+    width:130px;
+}
+.crud-container .header-fixed {
+    position: fixed;
+    top:0;
+    width:100%;
+    z-index: 5;
+    display: none;
+}
+.crud-container .header-fixed ul {
+    list-style: none;
+    margin:0;
+    padding: 0;
+    overflow: hidden;
+}
+.crud-container .header-fixed ul li {
+    float:left;
+    min-height: 15px;
+}
+.crud-container .table-datagrid {
+    width:100%;
+    border-top:1px solid white;
+}
+.crud-container .control-bar {
+    overflow: hidden;
+    background: #d5d5d5;
+    border-bottom: 1px solid #b9b9b9;
+}
+.crud-container .control-bar ul.actions {
+    margin:0;
+    padding: 0;
+    list-style: none;
+    float:left;
+    width: 200px;
+}
+.crud-container .control-bar ul.actions li a {
+    float:left;
+    width:35px;
+    height:30px;
+    text-indent: -9999px;
+    border-right:1px solid #b9b9b9;
+
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+}
+.crud-container .control-bar ul.actions li a.pdf {
+    background: url(../../../images/layout-assets/pdf-icon.svg) no-repeat center -34px;
+}
+.crud-container .control-bar ul.actions li a.pdf:hover {
+    background-position: center 6px;
+    background-color: #cf2727;
+}
+.crud-container .control-bar ul.actions li a.csv {
+    background: url(../../../images/layout-assets/csv-icon.svg) no-repeat center -34px;
+}
+.crud-container .control-bar ul.actions li a.csv:hover {
+    background-position: center 6px;
+    background-color: #25944c;
+}
+
+.crud-container .control-bar ul.actions li a.search {
+    background: url(../../../images/layout-assets/search-icon.svg) no-repeat center -34px;
+}
+.crud-container .control-bar ul.actions li a.search:hover, .crud-container .control-bar ul li a.search.selected {
+    background-position: center 8px;
+    background-color: #2f2f2f;
+}
+.crud-container div.search ul {
+    margin:10px;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+}
+.crud-container div.search ul li {
+    color:white;
+    float:left;
+    margin-right: 20px;
+}
+.crud-container div.search ul li label {
+    font-weight: 200;
+    font-size:12px;
+}
+.crud-container div.search input.form-control {
+}
+.crud-container div.search button {
+    margin-left:-5px;
+}
+.crud-container div.search h2{
+    color:white;
+    font-size:20px;
+    margin:0;
+    padding:0;
+}
+.crud-container div.search>div {
+    padding:10px 15px;
+}
+.crud-container div.search {
+    background: #2f2f2f;
+    height:0;
+    overflow: hidden;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+}
+.crud-container div.search.opened {
+    height:120px;
+}
+.crud-container .stats {
+    float:right;
+}
+.crud-container .stats {
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+.crud-container .stats .total {
+    font-size:12px;
+    height:30px;
+    line-height: 30px;
+
+    color:#696969;
+    padding:0px 15px;
+    float:left;
+}
+.crud-container .stats .pages {
+    float:right;
+}
+.crud-container .stats .pages a:hover, .crud-container .stats .pages a.selected {
+    background: #282828;
+    text-decoration: none;
+}
+.crud-container .stats .pages a {
+    float:left;
+    height:30px;
+    padding:0px 8px;
+    line-height: 30px;
+    font-size:11px;
+    background: #999999;
+    color:white;
+    margin-right: 1px;
+}
+

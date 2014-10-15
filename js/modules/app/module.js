@@ -6,10 +6,10 @@ define([
     'config',
     'routes',
     'ngAnimate',
+	'route-segment',
     'jquery-ui',
     'iscroll',
     'ngRoute',
-    'ngGrid',
     'ui.bootstrap',
     'ui.bootstrap.tpls'
 
@@ -18,13 +18,13 @@ define([
     'use strict';
 
 
-    var $app = angular.module('app.main', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngGrid']);
+    var $app = angular.module('app.main', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'route-segment', 'view-segment']);
 
     // Configuration App
 
-    $app.config(['$tooltipProvider', '$routeProvider' , '$locationProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
+    $app.config(['$tooltipProvider', '$routeProvider' , '$locationProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$routeSegmentProvider',
 
-        function ($tooltipProvider, $routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
+        function ($tooltipProvider, $routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $routeSegmentProvider) {
 
 
         $app.register =
@@ -44,24 +44,6 @@ define([
 
         /** Routes **/
 
-        $routeProvider.when('/', {
-            templateUrl: config.view.get('dashboard'),
-            controller: 'dashboardController',
-            resolve: {
-                load: ['$q', '$rootScope', function ($q, $rootScope) {
-
-                    var defer = $q.defer();
-
-                    require(['js/modules/dashboard/dashboard.controller'], function () {
-                        defer.resolve();
-                    });
-
-                    return defer.promise;
-                }]
-            }
-        });
-
-
         var resolve = {
             load: function ($route, $q, crudDataService) {
                 var defer = $q.defer();
@@ -69,16 +51,45 @@ define([
                     var data = crudDataService.load($route.current.params.module, defer);
                 });
                 return defer.promise;
-                //var
-                //return data;
             }
         };
 
-        $routeProvider.when('/:module.crud', {
-            templateUrl: config.view.get('crud'),
-            controller: 'crudController',
-            resolve: resolve
-        });
+        $routeSegmentProvider.
+            when('/', 'dashboard').
+            when('/:module.crud', 'crud').
+            when('/:module.crud/view', 'crud.view').
+            when('/:module.crud/insert', 'crud.insert').
+            segment('dashboard', {
+                templateUrl: config.view.get('dashboard'),
+                controller: 'dashboardController',
+                resolve: {
+                    load: ['$q', '$rootScope', function ($q, $rootScope) {
+
+                        var defer = $q.defer();
+
+                        require(['js/modules/dashboard/dashboard.controller'], function () {
+                            defer.resolve();
+                        });
+
+                        return defer.promise;
+                    }]
+                }
+            }).
+            segment('crud', {
+                templateUrl: config.view.get('crud'),
+                controller: 'crudController',
+                resolve: resolve,
+                dependencies: ['module']
+            }).
+            within().
+            segment('view', {
+                default: true,
+                templateUrl: config.view.get('grid', null, 'crud'),
+                controller: 'crudViewController'
+            }).
+            segment('insert', {
+                templateUrl: config.view.get('insert', null, 'crud')
+            });
 
     }]);
 
@@ -115,38 +126,32 @@ define([
             lastModule: null,
             load: function (mod, defer) {
 
-                if(mod != this.lastModule) {
+                this.lastModule = mod;
 
-                    this.lastModule = mod;
+                var deferredAbort = $q.defer();
+                var request = $http({method: "post", data: {'module': mod}, url: routes.crudData, timeout: deferredAbort.promise});
+                var service = this;
 
-                    var deferredAbort = $q.defer();
-                    var request = $http({method: "post", data: {'module': mod}, url: routes.crudData, timeout: deferredAbort.promise});
-                    var service = this;
-
-                    var promise = request.then(function (response) {
-                        service.data = response.data;
-                        defer.resolve();
-                        return (response.data);
-                    }, function (response) {
-                        return ($q.reject('Error'));
-                    });
-
-                    promise.abort = function () {
-                        deferredAbort.resolve();
-                    }
-
-                    promise.finally(
-                        function() {
-                            promise.abort = angular.noop;
-                            deferredAbort = request = promise = null;
-                        }
-                    );
-                    return promise;
-                } else {
+                var promise = request.then(function (response) {
+                    service.data = response.data;
                     defer.resolve();
+                    return (response.data);
+                }, function (response) {
+                    return ($q.reject('Error'));
+                });
 
-                    return defer.promise;
+                promise.abort = function () {
+                    deferredAbort.resolve();
                 }
+
+                promise.finally(
+                    function() {
+                        promise.abort = angular.noop;
+                        deferredAbort = request = promise = null;
+                    }
+                );
+                return promise;
+
 
             }
         };
@@ -183,6 +188,47 @@ define([
             }
         };
     });
+
+
+    $app.directive("repeatPassword", function() {
+        return {
+            require: "ngModel",
+            link: function(scope, elem, attrs, ctrl) {
+                var otherInput = elem.inheritedData("$formController")[attrs.repeatPassword];
+
+                ctrl.$parsers.push(function(value) {
+                    if(value === otherInput.$viewValue) {
+                        ctrl.$setValidity("repeat", true);
+                        return value;
+                    }
+                    ctrl.$setValidity("repeat", false);
+                });
+
+                otherInput.$parsers.push(function(value) {
+                    ctrl.$setValidity("repeat", value === ctrl.$viewValue);
+                    return value;
+                });
+            }
+        };
+    });
+
+    $app.directive('crudoption', ['$compile', function ($compile) {
+
+        return {
+            restrict: 'E',
+            replace: true,
+            link: function (scope, element, attrs) {
+
+                var value = attrs.ngBindHtml;
+                var html = scope.$parent.datagrid[value].toString();
+
+                var template = angular.element($compile(html)(scope));
+                element.replaceWith(template);
+            }
+        }
+    }]);
+
+
 
     return $app;
 });

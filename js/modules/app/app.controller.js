@@ -170,7 +170,6 @@ define(['./module', 'config', 'routes'], function (module, config, routes) {
                 $scope.showLoading();
             }
 
-            console.info(current);
 
             $('.main-menu a').removeClass('active');
 
@@ -190,6 +189,11 @@ define(['./module', 'config', 'routes'], function (module, config, routes) {
 
         $scope.$on('$routeChangeError', function () {
             $scope.hideLoading();
+        });
+
+
+        $rootScope.$on("routeSegmentChange", function (event, route) {
+            $(window).unbind('scroll touchstart touchmove touchend');
         });
     }]);
 

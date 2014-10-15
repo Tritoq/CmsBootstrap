@@ -13,9 +13,8 @@
     <link href="css/app.css" rel="stylesheet" type="text/css">
     <link href="css/app.mobile.css" rel="stylesheet" type="text/css">
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 </head>
 <!-- App Main -->
 <body ng-controller='ApplicationController'>
@@ -56,7 +55,8 @@
         </div>
         <!-- Conteúdo Central -->
         <div id="slide-right" class="main-content" ng-class="{opened: open, closed: !open}" ng-click="listenerOuterClick()" >
-            <div ng-view></div>
+            <!--<div ng-view></div>-->
+            <div app-view-segment="0"></div>
         </div>
         <!-- Barra de notificações -->
         <div class="notification" ng-class="{opened: notify, closed: !notify}">

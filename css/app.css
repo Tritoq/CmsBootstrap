@@ -11,6 +11,10 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+a{
+    outline: none!important;
+}
+
 /** Main Container **/
 #container {
     height:100%;
@@ -312,6 +316,7 @@ body::-webkit-scrollbar {
     background: #262626;
     position:fixed;
     right:0px;
+    z-index: 10;
     top:0;
     height:35px;    
     overflow: hidden;
@@ -445,7 +450,8 @@ body::-webkit-scrollbar {
     right:-230px;
     height:100%;
     padding:5px;
-    margin:0px;    
+    margin:0px;
+    z-index: 9999;
     -webkit-transition: right 0.2s ease-in-out;
     -moz-transition: right 0.2s ease-in-out;
     -ms-transition: right 0.2s ease-in-out;

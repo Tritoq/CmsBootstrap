@@ -37,7 +37,7 @@ define([
                     }
                 },
                 function (res) {
-                    throw "Username/Passowrd incorret";
+                    throw "Username/Password incorret";
                 }
             );
 
