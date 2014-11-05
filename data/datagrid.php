@@ -1,22 +1,55 @@
 <?php
+include('exception.php');
 /**
  * @author Artur Magalhães <nezkal@gmail.com>
  */
 
+$numb = rand(1, 1000);
+
+if($numb === 1) {
+    throwException(500);
+}
+
 $data = array();
 
-sleep(2);
+$module = (isset($_GET['module']) ? $_GET['module'] : '');
 
-for ($i = 0; $i < 50; $i++) {
+$nomes_random = array(
+    'Lorem Ipsum is simply dummy',
+    'Contrary to popular belief',
+    'Richard McClintock, a Latin professor',
+    'Aliquam sed tortor et nulla dignissim',
+    'Praesent tempus est mauris'
+);
+
+
+$status = array(
+    'out' => 'Indisponível',
+    'off' => 'Inativo',
+    'on' => 'Ativo'
+);
+
+$keys = array('out', 'off', 'on');
+
+for ($i = 99100; $i < 99150; $i++) {
+
+
+    $r = rand(0, 2);
+    $e = rand(0, 4);
 
     $data[] = array(
         'id' => $i,
-        'nome' => $_GET['module'] . ' Produto ' . $i . 'soidasdoiajsdaosijdasoidjasoidjsaoidjasodij',
-        'estoque' => rand(1, 99),
-        'status' => rand(1, 3),
-        'attachs' => rand(0, 200)
+        'nome' => $nomes_random[rand(0, sizeof($nomes_random)-1)],
+        'estoque' => $e,
+        'status' => $status[$keys[$r]],
+        'custominfo' => rand(3000, 10000),
+        'statusNumber' => $r,
+        'attachs' => 0,
+        'className' => $keys[$r] . ($e === 0 ? ' nostock ' : '')
     );
 }
+
+shuffle($data);
 
 $out['grid'] = $data;
 
@@ -45,6 +78,17 @@ $out['columns'] = array(
         'displayName' => 'Status',
     )
 );
+
+if($module == 'Produtos') {
+    $out['custom_columns'] = array(
+        array(
+            'field' => 'custom1',
+            'displayName'=> '',
+            'templateUrl' => 'custom/views/custom-group-buttons.php'
+        )
+    );
+}
+
 
 
 $out['pages'] = array();

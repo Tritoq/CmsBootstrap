@@ -4,7 +4,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .square {
         width:100%;
     }

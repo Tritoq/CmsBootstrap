@@ -11,5 +11,17 @@ define({
     'clearCache': 'data/clear-cache.php',
     'history': 'data/history.php',
     'userData': 'data/user-data.php',
-    'datagrid': 'data/datagrid.php'
+    'datagrid': 'data/datagrid.php',
+    'datagridLive': 'data/datagrid.live.php',
+    'delete': 'data/delete.php',
+    'viewDatagrid': 'data/view-datagrid.php',
+    'printItem': 'print-preview.php',
+    'upload': 'data/upload.php',
+    'live': 'data/live.php',
+    'attachs': 'data/attachs.php',
+    'thumbPreview': 'data/thumb.php',
+    'attachLink': 'data/attachLink.php',
+    'attachSortable': 'data/attachSortable.php',
+    'attachSubtitle': 'data/attachSubtitle.php',
+    'liveUpdate': 'data/live-update.php'
 });

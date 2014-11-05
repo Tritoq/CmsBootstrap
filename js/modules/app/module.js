@@ -10,21 +10,23 @@ define([
     'jquery-ui',
     'iscroll',
     'ngRoute',
+    'ngTouch',
     'ui.bootstrap',
-    'ui.bootstrap.tpls'
-
+    'ui.bootstrap.tpls',
+    'ui.sortable',
+    'bootstrapLightbox'
 ], function (angular, config, routes) {
 
     'use strict';
 
 
-    var $app = angular.module('app.main', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'route-segment', 'view-segment']);
+    var $app = angular.module('app.main', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'route-segment', 'view-segment', 'ngTouch', 'ui.sortable', 'bootstrapLightbox']);
 
     // Configuration App
 
-    $app.config(['$tooltipProvider', '$routeProvider' , '$locationProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$routeSegmentProvider',
+    $app.config(['$tooltipProvider', '$routeProvider' , '$locationProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$routeSegmentProvider', 'LightboxProvider',
 
-        function ($tooltipProvider, $routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $routeSegmentProvider) {
+        function ($tooltipProvider, $routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $routeSegmentProvider, LightboxProvider) {
 
 
         $app.register =
@@ -41,6 +43,8 @@ define([
         $tooltipProvider.options({
             appendToBody: true
         });
+
+        LightboxProvider.templateUrl = config.view.get('LightboxModal', 'html', 'crud');
 
         /** Routes **/
 
@@ -103,20 +107,276 @@ define([
         }
     });
 
-    $app.factory('Mobile', function ($rootScope) {
+    $app.factory('Mobile', function () {
 
         var obj = {
             isNotMobile: function () {
-                var check = false;
-                (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4)))check = true})(navigator.userAgent||navigator.vendor||window.opera);
-                return !check;
+                return !this.isMobile();
             },
             isMobile: function () {
-                return !this.isNotMobile();
+                if(navigator.userAgent.match(/Android/i)
+                    || navigator.userAgent.match(/webOS/i)
+                    || navigator.userAgent.match(/iPhone/i)
+                    || navigator.userAgent.match(/iPad/i)
+                    || navigator.userAgent.match(/iPod/i)
+                    || navigator.userAgent.match(/BlackBerry/i)
+                    || navigator.userAgent.match(/Windows Phone/i)
+                ){
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         };
 
         return obj;
+    });
+
+    $app.factory('Busy', function ($rootScope) {
+
+        if(!document.getElementById('busy')) {
+            var busy = $('<div></div>');
+            $(busy).attr('id', 'busy');
+            $(document.body).append(busy);
+            //$(busy).width(document.body.clientWidth).height(document.body.clientHeight);
+
+            $(window).resize(function () {
+                $(busy).width(document.body.clientWidth).height(document.body.clientHeight);
+            });
+
+            $(busy).bind('show', function () {
+                $(this).width(document.body.clientWidth).height(window.innerHeight);
+            });
+        }
+
+        $rootScope.$watch('busy', function (value) {
+            if(value) {
+                $('div#busy').trigger('show').show();
+            } else {
+                $('div#busy').hide();
+            }
+        });
+
+        return {
+            'isBusy': function (value) {
+                if(value == undefined) {
+                    return $rootScope.busy;
+                } else {
+                    $rootScope.busy = value;
+                }
+            }
+        }
+    });
+
+    $app.factory('User', function ($http, $rootScope, Live) {
+        return {
+            isLoad: false,
+            data: {},
+            load: function () {
+                var req = $http.get(routes.userData);
+                var obj = this;
+                req.success(function (data) {
+                    obj.data = $rootScope.user = data.user;
+                    obj.isLoad = true;
+                    $rootScope.$broadcast('$userLoadData', {user: data.user});
+
+                    if(data.user.live && data.user.live.length > 0) {
+                        Live.start(data.user.live);
+                    }
+
+                }).error(function (data) {
+                    console.error(data);
+                });
+            }
+        };
+    });
+
+    $app.factory('WindowNotification', function () {
+         return {
+             isGranted: function () {
+                if(window.webkitNotifications) {
+                    return window.webkitNotifications.checkPermission() == 0;
+                } else if ("Notification" in window) {
+                    return Notification.permission === 'granted';
+                } else {
+                    return false;
+                }
+             },
+             request: function (callback) {
+                if(window.webkitNotifications) {
+                    if (window.webkitNotifications.checkPermission() != 0) {
+                        window.webkitNotifications.requestPermission();
+                    }
+                } else if ("Notification" in window) {
+                    if(Notification.permission === 'default') {
+                        Notification.requestPermission(callback);
+                    }
+                }
+             },
+             sound: function (url) {
+                 $('body').append("<audio autoplay='autoplay'><source type='audio/mpeg' src='"+ url +"'></source></audio>");
+             },
+             send: function (title, text) {
+
+                 this.sound('/sound/beep.mp3');
+
+                 if(window.webkitNotifications) {
+                     window.webkitNotifications.createNotification('/favicon.ico', title, text).show();
+                 } else if('Notification' in window) {
+                     if(Notification.permission === 'granted') {
+                         var notification = new Notification(title, {
+                             icon: '/favicon.ico',
+                             body: text
+                         });
+                         notification.onclick = function () {
+                             window.focus();
+                             this.close();
+                         };
+
+                         var closeNotification = function () {
+                             notification.close();
+                             $(window).unbind('focus', closeNotification);
+                         };
+
+                         $(window).bind('focus', closeNotification);
+
+                     } else {
+                         console.info('Not allowed notification browser');
+                     }
+                 }
+             }
+         }
+    });
+
+    $app.factory('Live', function ($http, $rootScope, $interval, WindowNotification) {
+        $rootScope.live = {
+            data: {},
+            badges: 0,
+            update: function () {
+                var total = 0;
+
+                for(var i in this.data) {
+                    total += this.data[i];
+                }
+
+                this.badges = total;
+            }
+        };
+
+        var saveTitle = '';
+        var interval = null;
+
+        var swapTitle = function () {
+            if(saveTitle == '') {
+                saveTitle = $('title').html();
+            }
+            var b = false;
+            var swap = function () {
+                if(b) {
+                    $('title').html('(' + $rootScope.live.badges +') Novos registros no sistema');
+                } else {
+                    $('title').html(saveTitle);
+                }
+                b = !b;
+            };
+
+            if(interval) {
+                $timeout.cancel(interval);
+            }
+
+            interval = $interval(swap, 1000);
+            var clearInterval = function () {
+                $('title').html(saveTitle);
+                saveTitle = '';
+                $interval.cancel(interval);
+                $(window).unbind('focus', clearInterval);
+            };
+
+            $(window).bind ('focus', clearInterval);
+        };
+
+        $rootScope.$watch('live.data', function (newValue) {
+
+            var total = 0;
+
+            for(var i in newValue) {
+                total += newValue[i];
+            }
+
+            $rootScope.live.badges = total;
+
+        });
+        $rootScope.$watch('live.badges', function (newValue) {
+            if(newValue > 0) {
+                if(WindowNotification.isGranted() && !$rootScope.windowFocus) {
+                    WindowNotification.send('Novos registros no sistema', "" + newValue + ' novos registros no sistema');
+                    swapTitle();
+                }
+            }
+        });
+
+        return {
+            timeInterval: 5000,
+            modules: [],
+            isStarted: false,
+            listener: function () {
+                if(this.modules.length > 0) {
+                    var request = $http.post(routes.live, this.modules);
+                    request.success(function (data) {
+
+                        var badges = 0;
+                        for(var i in data) {
+                            badges += data[i];
+                        }
+
+                        if(badges > 0) {
+                            $rootScope.live.data = data;
+                            $rootScope.$broadcast('$liveUpdate', data);
+                        }
+                    }).error(function (e) {
+                        console.info(e);
+                    });
+                }
+            },
+            add: function (module) {
+                var contains = false;
+
+                for(var i in this.modules) {
+                    if(this.modules[i] == module) {
+                        contains = true;
+                    }
+                }
+
+                if(!contains) {
+                    this.modules.push(module);
+                }
+            },
+            remove: function (module) {
+                for(var i in this.modules) {
+                    if(this.modules[i] == module) {
+                        this.modules.splice(i, 1);
+                    }
+                }
+
+            },
+            start: function (modules) {
+                if(!this.isStarted) {
+                    this.modules = modules;
+                    this.isStarted = true;
+                    var obj = this;
+                    $interval(function () {
+
+                        obj.listener();
+
+                    }, this.timeInterval);
+                } else {
+                    for(var i in modules) {
+                        this.add(modules[i]);
+                    }
+                }
+            }
+        };
     });
 
 
@@ -153,6 +413,97 @@ define([
                 return promise;
 
 
+            }
+        };
+    });
+
+    $app.factory('crudItemService', function () {
+        return {
+            items: [],
+            add: function (item) {
+                this.items.push(item);
+            },
+            get: function () {
+                return this.items;
+            },
+            reset: function () {
+                this.items = [];
+            }
+        }
+    });
+
+
+    $app.factory('Message', function ($rootScope, $timeout) {
+
+        $rootScope.flashMessage = {
+            type: '',
+            code: false,
+            message: ''
+        };
+
+        $rootScope.windowFocus = true;
+
+        $(window).bind('focus', function () {
+            $rootScope.windowFocus = true;
+
+        }).bind('blur', function () {
+            $rootScope.windowFocus = false;
+        });
+
+
+        return {
+            event: {
+                error: 'ERROR',
+                success: 'SUCCESS',
+                info: 'INFO',
+                display: false
+            },
+            timeoutID: null,
+            show: function (type, msg, code, time) {
+                $rootScope.flashMessage.type = type;
+                $rootScope.flashMessage.message = msg;
+                $rootScope.flashMessage.code = (code == undefined) ? 0 : code;
+
+                if($rootScope.windowFocus) {
+                    $rootScope.flashMessage.display = true;
+                }
+
+
+
+                var event = null;
+
+                switch(type) {
+                    case 'error':
+                        event = this.event.error;
+                        break;
+                    case 'info':
+                        event = this.event.info;
+                        break;
+                    case 'success':
+                        event = this.event.success;
+                        break;
+                }
+
+                $rootScope.$broadcast(event, {msg: msg, code: code});
+
+                if(this.timeoutID) {
+                    $timeout.cancel(this.timeoutID);
+                }
+
+
+                this.timeoutID = $timeout(this.hide, ((time == undefined) ? 20000 : time));
+            },
+            hide: function () {
+                $rootScope.flashMessage.display = false;
+            }
+        };
+    });
+
+
+    $app.factory('Error', function (Message) {
+        return {
+            show: function (msg, code, timeout) {
+                Message.show('error', msg, code, timeout)
             }
         };
     });
@@ -227,6 +578,33 @@ define([
             }
         }
     }]);
+
+
+    $app.directive('custom', function ($http, $templateCache, $compile) {
+        return {
+            restrict: 'E',
+            scope: {
+                template: "=",
+                item: "="
+            },
+            link: function (scope, elem, attrs) {
+                $http.get(scope.template, {cache: $templateCache}).success(function (html) {
+                    var template = angular.element($compile(html)(scope));
+                    elem.replaceWith(template);
+                });
+            }
+        }
+    });
+
+    $app.filter('bytes', function() {
+        return function(bytes, precision) {
+            if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
+            if (typeof precision === 'undefined') precision = 1;
+            var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+                number = Math.floor(Math.log(bytes) / Math.log(1024));
+            return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
+        }
+    });
 
 
 

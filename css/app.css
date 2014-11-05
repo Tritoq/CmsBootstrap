@@ -2,6 +2,9 @@
 
 body, html {
     height:100%;
+    position: relative;
+    z-index: 1;
+    background: #262626;
 }
 body {
     -ms-overflow-style: none;
@@ -14,6 +17,9 @@ body::-webkit-scrollbar {
 a{
     outline: none!important;
 }
+* {
+
+}
 
 /** Main Container **/
 #container {
@@ -24,18 +30,22 @@ a{
 /** Main Menu **/
 .main-menu.opened {
     left:0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    -webkit-transition: -webkit-transform 1s ease;
+    transition: transform 1s ease;
+
+    -webkit-transform: translate(0px, 0);
+    -ms-transform: translate(0px, 0);
+    transform: translate(0px, 0);
 }
 
 .main-menu.closed {
-    left:-210px;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+
+    -webkit-transition: -webkit-transform 1s ease;
+    transition: transform 1s ease;
+
+    -webkit-transform: translate(-45px, 0);
+    -ms-transform: translate(-45px, 0);
+    transform: translate(-45px, 0);
 }
 .main-menu {
     position:relative;    
@@ -57,6 +67,24 @@ a{
     border-bottom: #363636 1px solid;
     font-size:14px;
     outline: none;
+}
+
+.main-menu li a.badged::after {
+    content: attr(badges);
+    position:absolute;
+    text-align: center;
+    width:15px;
+    height:15px;
+    line-height: 15px;
+    background: #d9534f;
+    font-size:9px;
+    font-weight: bold;
+    color:white;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 20px;
+    margin-right: 5px;
+    margin-top:3px;
+    right:0;
 }
 .main-menu li a.item:hover::before, .main-menu li a.active::before {
     background: #0f86bd!important;
@@ -159,12 +187,15 @@ a{
     position:absolute;
     width:100%;
     height:40px;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
     margin-left:0px;
     width:205px;
+
+    -webkit-transition: -webkit-transform 1s ease;
+    transition: transform 1s ease;
+
+    -webkit-transform: translate(0px, 0);
+    -ms-transform: translate(0px, 0);
+    transform: translate(0px, 0);
 }
 
 .bar-down .bar-menu {
@@ -196,7 +227,9 @@ a{
 }
 
 .bar-down.closed {
-    margin-left:-163px;
+    -webkit-transform: translate(-45px, 0);
+    -ms-transform: translate(-45px, 0);
+    transform: translate(-45px, 0);
 }
 .bar-down .bar-menu a:hover {
     background-color: black!important;    
@@ -232,22 +265,32 @@ a{
 
 /** Slide Left **/
 
-#slide-left, #slide-left.opened {
+#slide-left {
     background:#262626;
     height:100%;
     padding: 0px;    
     width:205px;
-    float: left;
-    position: fixed;    
-    -webkit-transition: left 0.5s ease;
-    -moz-transition: left 0.5s ease;
-    -o-transition: left 0.5s ease;
-    transition: left 0.5s ease;
-    left:0px;
+    position: fixed;
+    z-index: 9997;
+    -webkit-transition: -webkit-transform 0.5s ease;
+    transition: transform 0.5s ease;
+
+}
+#slide-left.opened {
+
+    -webkit-transform: translate(0px, 0);
+    -ms-transform: translate(0px, 0);
+    transform: translate(0px, 0);
 }
 
 #slide-left.closed {
-    left:-160px;            
+
+    -webkit-transition: -webkit-transform 0.5s ease;
+    transition: transform 0.5s ease;
+    -webkit-transform: translate(-160px, 0);
+    -ms-transform: translate(-160px, 0);
+    transform: translate(-160px, 0);
+
 }
 
 #slide-left .img-app, #slide-left .img-app.opened {
@@ -256,18 +299,52 @@ a{
     height: 15px;
     display: inline-block;
     padding:20px;
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -ms-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;       
+    /*-webkit-transition: background 0.2s ease-in-out, left 0.2s ease-in-out;
+    -moz-transition: background 0.2s ease-in-out, left 0.2s ease-in-out ;
+    -ms-transition: background 0.2s ease-in-out, left 0.2s ease-in-out;
+    -o-transition: background 0.2s ease-in-out, left 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out, left 0.2s ease-in-out;*/
     position: relative;
     left:0px;
+
+    -webkit-transition: background 0.5s ease, -webkit-transform 0.5s ease;
+    transition: background 0.5s ease, transform 0.5s ease;
+
+    -webkit-transform: translate(0px, 0);
+    -ms-transform: translate(0px, 0);
+    transform: translate(0px, 0);
+
+}
+
+#slide-left .img-app .badge-total.large {
+    width:20px;
+    margin-left:0px;
+}
+#slide-left .img-app .badge-total {
+    border-radius: 15px;
+    width:15px;
+    height:15px;
+    text-align:center;
+    background: #d9534f;
+    position:absolute;
+    color:white;
+    font-weight: bold;
+    font-size:9px;
+    padding: 2px 3px;
+    margin-left:4px;
+    margin-top:4px;
 }
 
 #slide-left .img-app.closed {    
-    left:160px;
-    background: url("../images/layout-assets/app-closed.png") no-repeat center center;        
+
+    background: url("../images/layout-assets/app-closed.png") no-repeat center center;
+
+    -webkit-transition: background 0.5s ease, -webkit-transform 0.5s ease;
+    transition: background 0.5s ease, transform 0.5s ease;
+
+    -webkit-transform: translate(160px, 0);
+    -ms-transform: translate(160px, 0);
+    transform: translate(160px, 0);
 }
 
 #slide-left .top-left {
@@ -289,26 +366,17 @@ a{
 /** Slide Right **/
  
 #slide-right, #slide-right.opened {
-    min-height: 500px;
-    height:100%;
-    background:#f2f2f2;
-    width:calc(100% - 205px);    
-    position: relative;
+    width: calc(100% - 45px);
     float:right;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    background: white;
+    min-height: 1024px;
 }
 
 #slide-right>div {
-    height:100%;
-}
-
-#slide-right.closed {
-    width: calc(100% - 45px);
 
 }
+
+#slide-right.closed {}
 
 /** Notifications **/
 
@@ -320,29 +388,32 @@ a{
     top:0;
     height:35px;    
     overflow: hidden;
+
+    -webkit-transition: height 0.5s ease, -webkit-transform 0.5s ease;
+    transition: height 0.5s ease, transform 0.5s ease;
+
+    -webkit-transform: translate(0px, 0);
+    -ms-transform: translate(0px, 0);
+    transform: translate(0px, 0);
+
+    /*
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     -ms-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;    
+    transition: all 0.2s ease-in-out;*/
 }
 
 .notification.opened {
-    right:231px;    
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -ms-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+
+
+    -webkit-transform: translate(-231px, 0);
+    -ms-transform: translate(-231px, 0);
+    transform: translate(-231px, 0);
 }
 
 .notification:hover, .notification.opened {
-    height:177px;    
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -ms-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    height:177px;
 }
 
 .notification:hover a.ico, .notification.opened a.ico {
@@ -435,28 +506,33 @@ a{
 /** Bar notifications (OPENED) **/
 
 .bar-notification.opened {
-    right:0;
-    -webkit-transition: right 0.2s ease-in-out;
-    -moz-transition: right 0.2s ease-in-out;
-    -ms-transition: right 0.2s ease-in-out;
-    -o-transition: right 0.2s ease-in-out;
-    transition: right 0.2s ease-in-out;
+
+
+
+
+    -webkit-transform: translate(0px, 0);
+    -ms-transform: translate(0px, 0);
+    transform: translate(0px, 0);
+
 }
 
 .bar-notification, .bar-notification.closed {
-    background:#262626;    
+    background:#262626;
+    right:0px;
     width:230px;
     position:fixed;
-    right:-230px;
     height:100%;
     padding:5px;
     margin:0px;
     z-index: 9999;
-    -webkit-transition: right 0.2s ease-in-out;
-    -moz-transition: right 0.2s ease-in-out;
-    -ms-transition: right 0.2s ease-in-out;
-    -o-transition: right 0.2s ease-in-out;
-    transition: right 0.2s ease-in-out;
+    -webkit-transition: -webkit-transform 0.5s ease;
+    transition: transform 0.5s ease;
+
+    -webkit-transform: translate(230px, 0);
+    -ms-transform: translate(230px, 0);
+    transform: translate(230px, 0);
+
+
 }
 
 .bar-notification h2 {
@@ -646,7 +722,7 @@ a{
 /* Preloader */
 
 #preloader {
-    position:absolute;
+    position:fixed;
     width:100%;
     height:100%;
     top:0;
@@ -760,4 +836,84 @@ ul#strength .point {
     height:5px;
     margin-right:1px;
     width:20px;
+}
+
+div#flashMessage, div#flashMessage.nhide {
+    padding:13px;
+    color:white;
+    text-align: center;
+    z-index: 999;
+    position: fixed;
+    top:0;
+    right:0;
+    width:calc(100% - 45px);
+    height:46px;
+
+    -webkit-transition: -webkit-transform 1s ease;
+    transition: transform 1s ease;
+
+    -webkit-transform: translate(0px, -46px);
+    -ms-transform: translate(0px, -46px);
+    transform: translate(0px, -46px);
+}
+
+
+div#flashMessage.error {
+    background-color: #d9534f;
+}
+
+div#flashMessage.success {
+    background-color: #5cb85c;
+}
+
+div#flashMessage.info {
+    background-color: #555;
+}
+
+div#flashMessage .msg {
+
+}
+div#flashMessage.nshow {
+    -webkit-transition: -webkit-transform 1s ease;
+    transition: transform 1s ease;
+
+    -webkit-transform: translate(0px,0px);
+    -ms-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+}
+
+div#flashMessage .code {
+    float:left;
+    position:relative;
+    padding:8px 25px;
+    margin-top:-13px;
+    margin-left:-13px;
+    font-size:21px;
+}
+div#flashMessage .act-close a {
+    float:right;
+    position:relative;
+    margin-right: -13px;
+    margin-top:-13px;
+    font-size:12px;
+    height:46px;
+    width:46px;
+    line-height: 46px;
+    font-size: 22px;
+}
+div#flashMessage .act-close a:hover {
+    text-decoration: none;
+}
+
+div.block-menu {
+    position:absolute;
+    width:100%;
+    height:calc(100% - 46px);
+    background: black;
+    opacity: 0.8;
+    z-index:99;
+}
+
+.tooltip {
+    z-index:9999!important;
 }

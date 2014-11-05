@@ -1,0 +1,56 @@
+td.custom1, th.custom1 {
+    width: 150px;
+}
+td.out span.status::before {
+    content: "";
+    position:absolute;
+    width:8px;
+    height: 8px;
+    margin-left:-15px;
+    margin-top:4px;
+    border-radius: 8px;
+    background: #afbbb8;
+
+}
+td.off span.status::before {
+    content: "";
+    position:absolute;
+    width:8px;
+    height: 8px;
+    margin-left:-15px;
+    margin-top:4px;
+    border-radius: 8px;
+    background: #d9534f;
+}
+td.on span.status::before {
+    content: "";
+    position:absolute;
+    width:8px;
+    height: 8px;
+    margin-left:-15px;
+    margin-top:4px;
+    border-radius: 8px;
+    background: #428bca;
+}
+td.nostock span.estoque {
+    color:#d9534f;
+}
+
+td.out span {
+    opacity: 0.5;
+}
+
+.actions li a.active {
+    background: url(../images/activate.svg) no-repeat center -40px;
+}
+.actions li a.active:hover {
+    background-position: center 9px;
+    background-color: #428bca;
+}
+.actions li a.desactive {
+    background: url(../images/desactivate.svg) no-repeat center -40px;
+}
+.actions li a.desactive:hover {
+    background-position: center 9px;
+    background-color: #d9534f;
+}

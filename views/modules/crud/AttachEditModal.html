@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <h3 class="modal-title">Editar anexo</h3>
+</div>
+<form class="form" ng-submit="confirm(item)">
+<div class="modal-body">
+
+    <div>
+        <div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{data.filename}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-4">
+                        <div class="thumb" ng-if="data.type == 'image/jpeg' || data.type == 'image/png' || data.type == 'image/gif'"  style="background: url('{{thumbPreview}}?filename={{data.filename}}') no-repeat center center">
+                        </div>
+                        <div class="thumb file" mime="{{data.type}}" ng-if="data.type != 'image/jpeg' && data.type != 'image/png' && data.type != 'image/gif'">
+                        </div>
+                    </div>
+                    <div class="col-md-8 list-group">
+                        <p class="list-group-item"><strong>Legenda:</strong> {{data.subtitle}}</p>
+                        <p class="list-group-item"><strong>Tamanho:</strong> {{data.size | bytes}}</p>
+                        <p class="list-group-item"><strong>Tipo:</strong> {{data.type}}</p>
+                        <p class="list-group-item"><strong>Data:</strong> {{data.datetime}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label for="subtitle">Nova legenda:</label>
+        <input class="form-control" type="text" id="subtitle" placeholder="Ex: Arquivo para download" ng-model="item.subtitle" />
+    </div>
+    <div class="form-group">
+
+        <div class="clear clearfix"></div>
+        <fieldset class="radiogroup form-group">
+            <label>Posição</label>
+            <div class="clear clearfix"></div>
+            <div class="col-md-1" ng-repeat="i in getRange(totalItems) track by $index">
+                <label class="radio-inline" >
+                    <input type="radio" ng-model="item.position" name="posicao" value="{{$index}}">
+                    <strong ng-if="$index == idx">{{$index + 1}}</strong>
+                    <span ng-if="$index != idx">{{$index + 1}}</span>
+                </label>
+            </div>
+        </fieldset>
+        <div class="clear clearfix"></div>
+        <button type='button' class="btn btn-default btn-xs" ng-disabled="item.position == idx" ng-click="item.position = idx">Restaurar padrão</button>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="preloader" ng-show="isLoading"></div>
+    <button class="btn btn-success" type="submit">Atualizar arquivo</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancelar</button>
+</div>
+</form>

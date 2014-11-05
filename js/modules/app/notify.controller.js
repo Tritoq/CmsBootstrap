@@ -4,7 +4,7 @@
 define(['./module', 'routes'], function (module, routes) {
     'use strict';
 
-    module.controller("NotificationController", function ($scope, $rootScope, $http, $timeout, NOTIFY_EVENTS, Mobile) {
+    module.controller("NotificationController", function ($scope, $rootScope, $http, $timeout, NOTIFY_EVENTS, Mobile, User, WindowNotification) {
 
         /** Setting objects **/
         $scope.loading = false;
@@ -114,21 +114,33 @@ define(['./module', 'routes'], function (module, routes) {
             }
         });
 
+
+
         $rootScope.$on(NOTIFY_EVENTS.open, function(e, obj) {
 
             switch(obj.tab) {
                 case 'user':
                     if(!$scope.user.isLoad) {
                         $scope.isLoading(true);
-                        var request = $http({'method': 'GET', url: routes.userData});
-                        request.then(function (e) {
-                            $scope.user = e.data.user;
-                            $scope.isLoading(false);
+
+
+                        var handleUser = function (user) {
+                            $scope.user = user;
                             $scope.user.isLoad = true;
-                        }, function (e) {
                             $scope.isLoading(false);
-                            console.error(e);
-                        });
+                        };
+
+                        if(!User.isLoad) {
+                            $scope.$on('$userLoadData', function (e, data) {
+                                handleUser(data.user);
+                            });
+                            User.load();
+
+                        } else {
+                            handleUser(User.data);
+                        }
+
+                        $scope.user.browserNotifications = WindowNotification.isGranted();
                     }
                     break;
                 case 'history':
@@ -192,6 +204,13 @@ define(['./module', 'routes'], function (module, routes) {
             }, function (response) {
                 $scope.isLoading(false);
                 $scope.message.error('Erro na atualização dos dados');
+            });
+        };
+
+        $scope.enableNotification = function () {
+            WindowNotification.request(function (permission) {
+                $scope.user.browserNotifications  = permission === 'granted';
+                $scope.$apply();
             });
         };
 

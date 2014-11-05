@@ -1,20 +1,55 @@
 @media (max-width: 768px) {
+    div#upload  .list-attachs li {
+        width:20%!important;
+    }
     .crud-container .tab a {
         padding: 6px 6px;
         width: auto;
         font-size:12px;
     }
-    .crud-container .stats {
-        width:100%;
-        border-top:1px solid  #b9b9b9;
-    }
+
     .crud-container td {
         max-width: 150px;
         overflow: hidden;
         white-space: nowrap;
 
     }
+
     .crud-container td.option, .crud-container th.option, .crud-container li.option {
         display:none;
+        right: -100px;
+
+    }
+
+    .viewDialog .modal-dialog {
+        width:650px;
+    }
+
+
+}
+@media (max-width: 1280px) {
+    div#upload  .list-attachs li {
+        width:12.5%;
+    }
+}
+@media (max-width: 1024px) {
+
+    div#upload  .list-attachs li {
+        width:16.666%;
+    }
+    .crud-container .table-datagrid td {
+        padding: 10px 4px;
+    }
+
+
+    .crud-container .table-datagrid .cellOptions button, .crud-container .control-bar ul.actions li a, .crud-container .tab a, .notification a {
+        -webkit-transition: none!important;
+        -moz-transition: none!important;
+        -ms-transition: none!important;
+        -o-transition: none!important;
+    }
+
+    div#upload .left.sattach #area-upload {
+        background-size: 200px;
     }
 }

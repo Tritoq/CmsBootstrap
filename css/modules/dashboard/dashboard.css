@@ -15,9 +15,10 @@
 }
 
 #ga-chart {
-    width:100%;    
+    width:100%;
     height:calc(100%);
     overflow: hidden;
+
 }
 
 .crud-snapshot .container {

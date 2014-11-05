@@ -11,12 +11,17 @@
         "angular-bootstrap": "latest",
         "angular-mocks": "latest",
         "angular-route-segment": "latest",
+        "angular-touch": "latest",
+        "angular-ui-sortable": "latest",
+        "angular-bootstrap-lightbox": "latest",
+        "angular-loading-bar": "latest",
         "bootstrap": "latest",
         "jquery": "latest",
         "jquery-ui": "latest",
         "iscroll": "latest",
         "requirejs": "latest",
-        "requirejs-domready": "latest"
+        "requirejs-domready": "latest",
+        "dropzone": "latest"
     },
     "ignore": [
         "**/.*",

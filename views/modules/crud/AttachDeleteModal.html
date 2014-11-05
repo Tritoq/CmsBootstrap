@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h3 class="modal-title">Deletar os anexos(s) selecionado(s)</h3>
+</div>
+<div class="modal-body">
+    <p>Deseja confirmar a exclusão dos anexos selecionados ?</p><br/>
+
+
+    <p class="bg-danger text-danger" style="padding:10px;">Total de itens selecionados: <strong>{{items.length}}</strong></p>
+
+</div>
+<div class="modal-footer">
+    <p class="text-warning pull-left">* Este processo não poderá ser mais revertido</p>
+    <button class="btn btn-danger" ng-click="confirm()">Excluir</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancelar</button>
+</div>

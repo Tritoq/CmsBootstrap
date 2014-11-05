@@ -12,6 +12,7 @@ define([
 
     // Set the default format
     config.view.defaultFormat = 'php';
+    config.debug = true;
 
     angular.bootstrap(document, ['main']);
 });

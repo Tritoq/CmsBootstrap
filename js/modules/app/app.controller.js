@@ -14,7 +14,7 @@ define(['./module', 'config', 'routes'], function (module, config, routes) {
         };
     };
 
-    module.controller('ApplicationController', ['$scope', '$rootScope', 'NOTIFY_EVENTS', '$timeout', '$window', '$modal', 'APP',  function($scope, $rootScope, NOTIFY_EVENTS, $timeout, $window, $modal, APP) {
+    module.controller('ApplicationController', ['$scope', '$rootScope', 'NOTIFY_EVENTS', '$timeout', '$window', '$modal', 'APP', 'Mobile', 'Message', 'User', function($scope, $rootScope, NOTIFY_EVENTS, $timeout, $window, $modal, APP, Mobile, Message, User) {
         var ctrl = this;
 
         /** Init Variables **/
@@ -27,11 +27,12 @@ define(['./module', 'config', 'routes'], function (module, config, routes) {
 
         $scope.preloader = {};
 
-        if(document.body.clientWidth >= 1200) {
+       /* if(document.body.clientWidth >= 1200) {
             $scope.open = true;
-        } else {
+        } else {*/
             $scope.open = false;
-        }
+        //}
+
 
         /** Methods **/
 
@@ -134,15 +135,45 @@ define(['./module', 'config', 'routes'], function (module, config, routes) {
 
         /** Listeners **/
 
-        var onResize = function (e) {
-            if(document.body.clientWidth >= APP.closeWidth) {
-                $scope.$apply(function () { $scope.open = true });
-            } else {
-                $scope.$apply(function () { $scope.open = false });
-            }
-        };
+        if(Mobile.isMobile()) {
+            $('#slide-left').bind('touchstart', function(event) {
+                this.posX = event.originalEvent.touches[0].pageX;
+                this.posY = event.originalEvent.touches[0].pageY;
+            });
 
-        angular.element($window).bind('resize', onResize);
+            $('#slide-left').bind('touchmove touchend', function(event) {
+                var nX = event.originalEvent.touches[0].pageX;
+                var nY = event.originalEvent.touches[0].pageY;
+
+                var abs = Math.abs(nY - this.posY);
+
+
+                if(abs < 4) {
+                    if(nX - this.posX > 5) {
+                        if(!$scope.open) {
+                            $scope.open = true;
+                            $scope.$apply();
+                        }
+                    } else if (nX - this.posX < -5) {
+                        if($scope.open) {
+                            $scope.open = false;
+                            $scope.$apply();
+                        }
+                    }
+                }
+            });
+
+
+
+        } else {
+            $('#slide-left').bind('mouseenter', function () {
+                $scope.open = true;
+                $scope.$apply();
+            }).bind('mouseleave', function () {
+                $scope.open = false;
+                $scope.$apply();
+            });
+        }
 
         $rootScope.$on(NOTIFY_EVENTS.load, function (e, data) {
             if(data.value != undefined) {
@@ -155,10 +186,10 @@ define(['./module', 'config', 'routes'], function (module, config, routes) {
         $scope.$on('$routeChangeStart', function (next,current) {
 
 
-            if(document.body.clientWidth < APP.closeWidth) {
+            //if(document.body.clientWidth < APP.closeWidth) {
                 $scope.open = false;
                 $scope.notify = false;
-            }
+            //}
 
 
             if(current.params.module) {
@@ -181,10 +212,13 @@ define(['./module', 'config', 'routes'], function (module, config, routes) {
                     $('.main-menu a.dashboard').addClass('active');
                 }
             }
+
+
         });
 
         $scope.$on('$routeChangeSuccess', function () {
             $scope.hideLoading();
+            $('html, body').animate({scrollTop: 0}, 0);
         });
 
         $scope.$on('$routeChangeError', function () {
@@ -192,9 +226,21 @@ define(['./module', 'config', 'routes'], function (module, config, routes) {
         });
 
 
-        $rootScope.$on("routeSegmentChange", function (event, route) {
+        $rootScope.$on("$routeSegmentChange", function (event, route) {
             $(window).unbind('scroll touchstart touchmove touchend');
         });
+
+
+
+        $scope.$on('$disableLeftMenu', function () {
+            $scope.disableMenu = true;
+        });
+
+        $scope.$on('$enableLeftMenu', function () {
+            $scope.disableMenu = false;
+        });
+
+        User.load();
     }]);
 
 

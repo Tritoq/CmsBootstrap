@@ -6,6 +6,6 @@ $user = new stdClass();
 $user->nome = "Artur";
 $user->email = "artur@tritoq.com";
 $user->grupo = "Super Usuário";
-sleep(1);
+$user->live = array('Produtos');
 
 echo json_encode(array('user'=>$user));

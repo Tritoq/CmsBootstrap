@@ -4,6 +4,7 @@
 define('config', function () {
     'use strict';
     var Config = {
+        debug: false,
         css: {
             'basePath': 'css',
             'get': function (file, module) {
@@ -42,7 +43,6 @@ define('config', function () {
             }
         }
     };
-
 
     return Config;
 

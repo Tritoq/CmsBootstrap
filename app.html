@@ -13,8 +13,7 @@
     <link href="css/app.css" rel="stylesheet" type="text/css">
     <link href="css/app.mobile.css" rel="stylesheet" type="text/css">
 
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" id="dynamic-favicon" href="/favicon.ico" type="image/x-icon" />
 </head>
 <!-- App Main -->
 <body ng-controller='ApplicationController'>
@@ -22,24 +21,28 @@
     <!-- Container Main -->
     <div id="container">
         <!-- Barra Lateral -->
-        <div id="slide-left" ng-class="{opened: open, closed: !open}">
+        <div id="slide-left" ng-class="{opened: open, closed: !open}" ng-swipe-right="openLeftBar()" ng-swipe-left="closeLeftBar()">
             <!-- Barra topo, info de login -->
             <div class="top-left">
-                <a href="" ng-click="openLeftBar()" class="img-app button" ng-class="{opened: open, closed: !open}"></a>
+                <a href="" ng-click="openLeftBar()" class="img-app button" ng-class="{opened: open, closed: !open}">
+                    <span ng-show="$root.live.badges > 0" class='badge-total' ng-if="$root.live.badges <= 99">{{$root.live.badges}}</span>
+                    <span ng-show="$root.live.badges > 0" class='badge-total large' ng-if="$root.live.badges > 99">99+</span>
+                </a>
                 <span class="user-info" ng-show="open">Tritoq Agencia Digital</span>
             </div>
             <!-- Menu principal -->
+            <div class="block-menu" ng-show="disableMenu"></div>
             <div class="main-menu"  ng-class="{opened: open, closed: !open}" ng-init="items = ['Item02', 'Item03', 'Item04']" >
                 <ul>
-                    <li><a href="#" class="dashboard">Dashboard</a></li>
-                    <li><a href="" class="item">Item 01</a></li>
+                    <li><a href="#/" class="dashboard">Dashboard</a></li>
+                    <li><a href="#/Produtos.crud" badges="{{$root.live.data['Produtos']}}" ng-class="{'badged': $root.live.data['Produtos'] > 0 }" id="Produtos" class="item">Produtos</a></li>
                     <li>
                         <a class="subitem" ng-class="{opened: subitem}" ng-click="subitem = !subitem">Subitem</a>
                         <ul class="submenu" ng-class="{opened: subitem}">
-                            <li ng-repeat="item in items"><a href="#/Sub{{item}}.crud" id="Sub{{item}}" class="item">{{item}}</a></li>
+                            <li ng-repeat="item in items"><a href="#/Sub{{item}}.crud" id="Sub{{item}}" class="item" badges="{{$root.live.data['Sub'+item]}}" ng-class="{'badged': $root.live.data['Sub'+item] > 0 }">{{item}}</a></li>
                         </ul>
                     </li>
-                    <li ng-repeat="item in items"><a href="#/{{item}}.crud" id="{{item}}" class="item">{{item}}</a></li>
+                    <li ng-repeat="item in items"><a href="#/{{item}}.crud" id="{{item}}" class="item" badges="{{$root.live.data[item]}}" ng-class="{'badged': $root.live.data[item] > 0 }">{{item}}</a></li>
                 </ul>
             </div>
             <!-- Barra de rodapé -->
@@ -56,6 +59,12 @@
         <!-- Conteúdo Central -->
         <div id="slide-right" class="main-content" ng-class="{opened: open, closed: !open}" ng-click="listenerOuterClick()" >
             <!--<div ng-view></div>-->
+            <div id="flashMessage" ng-class="{'nhide': !$root.flashMessage.display, 'nshow': $root.flashMessage.display, 'error': $root.flashMessage.type == 'error', 'success': $root.flashMessage.type == 'success', 'info': $root.flashMessage.type == 'info'}" >
+                <div ng-show="$root.flashMessage.type == 'error'" class="code bg-danger text-danger">{{$root.flashMessage.code}}</div>
+                <div class="act-close"><a href="" ng-click="$root.flashMessage.display=false" ng-class="{'bg-danger text-warning': $root.flashMessage.type == 'error', 'bg-success text-success': $root.flashMessage.type == 'success', '   ': $root.flashMessage.type == 'info'}">X</a></div>
+                <div class="msg"><strong ng-show="$root.flashMessage.type == 'error'">Ooops!</strong> {{$root.flashMessage.message}}</div>
+
+            </div>
             <div app-view-segment="0"></div>
         </div>
         <!-- Barra de notificações -->
@@ -122,6 +131,7 @@
 
                         </fieldset>
                     </form>
+                    <form><label><input ng-change="enableNotification()" type="checkbox" ng-model="user.browserNotifications" ng-disabled="user.browserNotifications" /> Habilitar notificações do navegador</label></form>
                 </div>
             </div>
             <div class="dashboard" ng-show="bar_dashboard">

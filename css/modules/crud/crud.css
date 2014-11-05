@@ -3,7 +3,8 @@
     padding:10px 10px;
 }
 .crud .bar h1 {
-    margin:0;
+    margin:-2px 0 0 0;
+
     padding:0;
     font-family: 'Source Sans Pro';
     font-weight: 100;
@@ -117,6 +118,9 @@
     -o-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
 }
+.crud-container .table-datagrid .cellOptions button:focus {
+    outline: none;
+}
 .crud-container .table-datagrid .cellOptions button.attach:hover {
     background-position: center 7px;
     background-color: #c104e3;
@@ -153,26 +157,45 @@
     color:  white;
     background: #d1d1d1;
 }
-
+.crud-container .table-datagrid .cellOptions .attachNumber.badged {
+    background: #5cb85c;
+}
 .crud-container .loader {
     background: url(../../../images/layout-assets/crud-preloader.gif) no-repeat center center;
     text-indent: -99999px;
     width:100px;
     height: 100px;
     margin: 0 auto;
-    margin-top:150px;
-    margin-bottom: 300px;
+
+}
+
+.crud-container .refresh {
+    background: url(../../../images/layout-assets/crud-preloader.gif) no-repeat #f2f2f2 center 300px;
+    position:absolute;
+    width: 100%;
+    min-height: 500px;
+    opacity: 0.9;
+    z-index: 998;
+    display: none;
 }
 
 .crud-container #grid-container {
     background: #f2f2f2;
 }
-
+.crud-container .table-datagrid {
+    margin-bottom: 40px;
+}
+.crud-container .table-datagrid.uploaded {
+    margin-bottom: 310px;
+}
 .crud-container .table-datagrid td {
     font-size:12px;
     padding:4px;
     border-bottom: 1px solid white;
     color: #494949;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    user-select: none;
 }
 .crud-container .table-datagrid td.option {
     padding:0;
@@ -183,12 +206,32 @@
     background: #ececec;
 }
 
-
+.crud-container .table-datagrid tr.success td {
+    background: #5cb85c!important;
+}
+.crud-container .table-datagrid tr.new td {
+    background:rgba(92, 184, 92, 0.2);
+}
 .crud-container .table-datagrid tr.selected td {
     background: #a6e1fd;
 }
-.crud-container .table-datagrid tr:hover td  {
+.crud-container .table-datagrid tr.over:hover td  {
     background: #d4d4d4;
+}
+
+.crud-container .table-datagrid tr.over.selected:hover td {
+    background: #8bbcd1;
+}
+
+.crud-container .table-datagrid tr.attach td {
+    background: #f189ff!important;
+}
+
+.crud-container .table-datagrid tr.touched td {
+    background: #d64035!important;
+}
+.crud-container .table-datagrid th#id {
+
 }
 .crud-container .table-datagrid th, .crud-container .header-fixed {
     background: #e5e5e5;
@@ -198,6 +241,36 @@
     font-weight: 400;
     border-bottom: 1px solid #c6c6c6;
 }
+
+.crud-container .table-datagrid th.clickable {
+    cursor: pointer;
+}
+.crud-container .table-datagrid th.orderer {
+
+
+}
+.crud-container .table-datagrid th.orderer.up::before {
+    content:'';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid black;
+    position:relative;
+    display: inline-block;
+
+}
+.crud-container .table-datagrid th.orderer.down::before {
+    content:'';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+    position:relative;
+    display: inline-block;
+}
+
 .crud-container .table-datagrid th.option {
     width:130px;
 }
@@ -232,7 +305,12 @@
     padding: 0;
     list-style: none;
     float:left;
-    width: 200px;
+
+}
+.crud-container .control-bar ul.actions li {
+    float:left;
+    height: 30px;
+    overflow: hidden;
 }
 .crud-container .control-bar ul.actions li a {
     float:left;
@@ -252,6 +330,17 @@
 .crud-container .control-bar ul.actions li a.pdf:hover {
     background-position: center 6px;
     background-color: #cf2727;
+}
+
+.crud-container .control-bar ul.actions li a.live {
+    text-indent: initial;
+    line-height: 30px;
+    text-align: center;
+    color: #f0ad4e;
+}
+.crud-container .control-bar ul.actions li a.live:hover, .crud-container .control-bar ul.actions li a.selected {
+    color:white;
+    background: #f0ad4e;
 }
 .crud-container .control-bar ul.actions li a.csv {
     background: url(../../../images/layout-assets/csv-icon.svg) no-repeat center -34px;
@@ -327,7 +416,7 @@
     float:left;
 }
 .crud-container .stats .pages {
-    float:right;
+    float:left;
 }
 .crud-container .stats .pages a:hover, .crud-container .stats .pages a.selected {
     background: #282828;
@@ -343,4 +432,528 @@
     color:white;
     margin-right: 1px;
 }
+.crud-container .stats li.delete {
+    float:right;
+}
+.crud-container .stats li.delete a {
+    float:right;
+    width:30px;
+    height: 30px;
+    background: url(../../../images/layout-assets/delete.svg)  no-repeat center -35px;
+}
+.crud-container .stats li.delete a:hover {
+    background-position: center 7px;
+    background-color: #c50000;
+}
+.viewDialog .modal-dialog {
+    width:1000px;
+}
+.viewDialog table.view-detailed {
+    width:100%;
+    font-size:14px;
+}
+.viewDialog table.view-detailed td {
+    padding:10px 0px;
+    margin: 10px 0px;
+    border-bottom: 1px solid #f5f5f5;
+}
 
+.viewDialog table.view-detailed .field {
+    font-weight: bold;
+    width:20%;
+    vertical-align: top;
+}
+.viewDialog .modal-footer {
+    text-align:left;
+    background: #eaeaea;
+}
+.viewDialog .modal-footer .btn-warning {
+    float:right;
+}
+
+.deleteDialog .list-group {
+    text-align: center;
+    overflow: hidden;
+    margin-left:1px;
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+.deleteDialog .list-group li {
+    float:left;
+    width:10%;
+    margin-right:-1px;
+    padding: 10px 5px;
+}
+
+li.selectall  {
+
+
+}
+li.selectall a:hover {
+    background-color: #e6e6e6;
+}
+li.selectall a {
+    background: url(../../../images/layout-assets/checked-all.svg) no-repeat center 8px;
+
+}
+li.selectall a.checked {
+    background-position: center -30px;
+}
+
+div#busy {
+    opacity: 0.5;
+    background: #f2f2f2 url(../../../images/layout-assets/crud-preloader.gif) center center no-repeat;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 9998;
+    display:none;
+}
+
+div#upload {
+    position:fixed;
+    z-index:999;
+    bottom:0;
+    width:calc(100% - 45px);
+    right:0;
+    height:300px;
+    background: #333;
+    -webkit-transition: -webkit-transform 1s ease, height 1s ease;
+    transition: transform 1s ease, height 1s ease;
+}
+div#upload.closed {
+    -webkit-transform: translate(0px, 270px);
+    -ms-transform: translate(0px, 270px);
+    transform: translate(0px, 270px);
+}
+div#upload.fullsize {
+    -webkit-transform: translate(0px, 25px);
+    -ms-transform: translate(0px, 25px);
+    transform: translate(0px, 25px);
+    height: calc(100% - 25px);
+}
+div#upload.chidden {
+    -webkit-transform: translate(0px, 300px);
+    -ms-transform: translate(0px, 300px);
+    transform: translate(0px, 300px);
+}
+div#upload .topbar {
+    height:30px;
+    border-bottom:1px solid #555;
+}
+div#upload .topbar .progress {
+    height:10px;
+    background: #555;
+    width:calc(100% - 110px);
+    float:left;
+    margin-top:10px;
+    margin-left:10px;
+    margin-bottom: 0px;
+}
+div#upload .topbar .minimize, div#upload .topbar .maximize, div#upload .topbar .closeb, div#upload .topbar .fullsize {
+    width:30px;
+    height:30px;
+    background: #555;
+    float:right;
+    line-height: 30px;
+    text-align: center;
+    color:white;
+}
+.disabled {
+    opacity: 0.4;
+    cursor:not-allowed;
+}
+div#upload .topbar .fullsize {
+    margin-left:1px;
+}
+div#upload .bt-expand:hover {
+    background-color: #5cb85c;
+}
+
+div#upload .bt-expand, div#upload .url-attach {
+    width:60px;
+    height:calc(100% - 30px);
+    background: #555;
+    text-align: center;
+    color:#333;
+    position:absolute;
+    top:0;
+    display: inline-block;
+    right: 0;
+    left:auto;
+    z-index:100;
+    border-top:1px solid #222;
+    margin-top:30px;
+}
+
+div#upload .url-attach:hover {
+    background-color: #f0ad4e;
+}
+div#upload .url-attach {
+    right: auto;
+    left: 0;
+    margin-top:0;
+}
+div#upload .sattach .bt-expand {
+
+}
+div#upload .bt-expand span, div#upload .url-attach span {
+    position:absolute;
+    top:calc(50% - 14px);
+    display: block;
+    left:25px;
+}
+div#upload .topbar .closeb {
+    margin-left:1px;
+    margin-right: 0px;
+    background-color: #d9534f;
+}
+div#upload .topbar .fullsize:hover {
+    background-color: #428bca;
+}
+div#upload .topbar .closeb:hover {
+    background-color: #a2403d;
+}
+div#upload .topbar .maximize:hover {
+    background-color: #5bc0de;
+}
+div#upload .topbar .minimize:hover {
+    background-color:#f0ad4e;
+}
+div#upload .right, div#upload .left {
+
+}
+
+div#upload .left.sattach {
+
+}
+div#upload .right.sattach {
+    -webkit-transform: translate(0px, 0px);
+    -ms-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+}
+div#upload .left {
+    width:100%;
+    border-right: 1px solid #555;
+    float:left;
+    overflow: hidden;
+    position:absolute;
+    z-index: 98;
+    height:100%;
+}
+div#upload .right {
+    height:100%;
+    width:100%;
+    float:right;
+    overflow: hidden;
+    position:absolute;
+    z-index: 99;
+    background: #222;
+    -webkit-transition: -webkit-transform 0.5s ease;
+    transition: transform 0.5s ease;
+
+    -webkit-transform: translate(calc(100% - 60px), 0px);
+    -ms-transform: translate(calc(100% - 60px), 0px);
+    transform: translate(calc(100% - 60px), 0px);
+
+}
+div#upload .right .title {
+    font-size:12px;
+    background: #222;
+    color:#777;
+    font-weight: 600;
+    padding:8px;
+    width:100%;
+    margin: 0 auto;
+    text-align: center;
+}
+div#upload .right .label {
+    position:absolute;
+    line-height: normal!important;
+    margin-top:100px;
+    margin-left:-20px;
+}
+
+div#upload #area-upload {
+    width: calc(100% - 60px);
+    height:100%;
+    padding:0px 0px 0px 0px;
+    color:white;
+    border: 8px solid transparent;
+    overflow: hidden;
+    background: url(../../../images/layout-assets/bg-upload.png) no-repeat center center;
+}
+
+div#upload .progress span {
+    font-size: 9px;
+    line-height: 10px;
+    position: absolute;
+    display: block;
+    margin-left:5px;
+}
+div#upload #area-upload:hover {
+    background-color: #171717;
+}
+
+div#upload #area-upload.dz-drag-hover {
+    border: 8px dashed #f0ad4e;
+    color:#f0ad4e;
+}
+div#upload #area-upload .dz-message {
+    font-size:30px;
+    text-align: center;
+}
+div#upload #area-upload .msg {
+    margin-top:80px;
+    text-align:center;
+}
+div#upload #area-upload.dz-started .msg{
+    display:none;
+}
+div#upload .dz-preview .dz-progress .dz-upload {
+    background: #428bca;
+}
+div#upload .dz-preview .dz-progress {
+    height:3px;
+    top:110px;
+}
+div#upload .dz-preview .dz-details {
+    width:100%;
+    text-align: center;
+    overflow: hidden;
+    background: none;
+    margin:0;
+    height:105px;
+    text-shadow: 2px 2px 2px rgb(52, 52, 52);
+}
+div#upload .dz-preview .dz-details img {
+    margin:0 auto;
+    display: block;
+    position: static;
+}
+div#upload .dz-preview {
+    background: #111111;
+    border:none;
+    margin:0;
+    width:12.5%;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+div#upload .left.sattach .dz-preview {
+    width:33.3%;
+}
+div#upload .dz-preview.dz-error {
+    background: #c50000;
+}
+div#upload .dz-preview .dz-details .dz-filename, div#upload .dz-preview .dz-details .dz-size {
+    position:absolute;
+}
+div#upload .dz-preview .dz-details .dz-size {
+    bottom:0;
+    left:0;
+}
+
+div#upload .dz-error-mark, div#upload .dz-error-message, div#upload .dz-success-mark{
+    display: none;
+
+}
+div#upload  .list-attachs {
+    list-style: none;
+    padding:0;
+    width:calc(100% - 80px);
+    margin-left:10px;
+    overflow: hidden;
+    min-height: 270px;
+}
+div#upload  div.preloader {
+    background: url(../../../images/layout-assets/attach-preloader-black.gif) no-repeat center;
+    min-height: 270px;
+}
+div#upload  .list-attachs li {
+    width:10%;
+    float:left;
+    margin-bottom: 20px;
+    height:100px;
+    position:relative;
+
+}
+div#upload  .list-attachs li a:hover {
+
+
+
+}
+div#upload  .list-attachs li a:hover .img {
+
+}
+div#upload  .list-attachs li a:hover .layer {
+
+}
+div#upload  .list-attachs li:hover a.thumb {
+    /*-webkit-box-shadow: -1px 0px 59px -8px rgba(91,192,222,1);
+    -moz-box-shadow: -1px 0px 59px -8px rgba(91,192,222,1);
+    box-shadow: -1px 0px 59px -8px rgba(91,192,222,1);*/
+}
+div#upload  .list-attachs li .layer a {
+    float:left;
+    width:25px;
+    height:25px;
+    margin:0 auto;
+    text-align: center;
+    line-height: 27px;
+    color: white;
+    margin-bottom: 5px;
+    background: #777;
+    border-radius: 25px;
+    display: none;
+}
+
+div#upload  .list-attachs li.selected .layer a.selected {
+    display: block;
+    background: #5cb85c;
+}
+div#upload  .list-attachs li:hover .layer a {
+    display:block;
+}
+div#upload  .list-attachs li:hover .layer a.delete {
+    background-color: #d9534f;
+}
+div#upload  .list-attachs li:hover .layer a.delete:hover {
+    background-color:#c50000;
+}
+div#upload  .list-attachs li .layer a:hover {
+    background-color: #428bca;
+}
+
+
+div#upload  .list-attachs li:hover .layer {
+    display: block;
+}
+div#upload  .list-attachs li .layer {
+    position:absolute;
+    width:30px;
+    z-index:20;
+}
+div#upload  .list-attachs li .layer.mright {
+    position:absolute;
+    z-index:20;
+    right:0;
+}
+div#upload  .list-attachs li.selected a.thumb .img {
+    opacity: 1;
+}
+div#upload  .list-attachs li.selected a.thumb {
+
+}
+div#upload  .list-attachs li a.thumb {
+    margin:0 auto;
+    width:100px;
+    height:100%;
+    display:block;
+    margin-bottom: 10px;
+}
+div#upload  .list-attachs li:hover a.thumb .img {
+    opacity: 1;
+}
+div#upload  .list-attachs li a.thumb .img {
+    width:100%;
+    height:100%;
+    opacity: 0.4;
+    border-radius: 5px;
+    float:left;
+    cursor:move;
+}
+.file, .attachModal .thumb {
+    background: url(../../../images/layout-assets/extension-file.svg) no-repeat center -5px;
+}
+.file[mime="application/zip"],  {
+    background: url(../../../images/layout-assets/extension-zip.svg) no-repeat center -5px;
+}
+.file[mime="application/pdf"] {
+    background: url(../../../images/layout-assets/extension-pdf.svg) no-repeat center -5px;
+}
+.file[mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"] {
+    background: url(../../../images/layout-assets/extension-xls.svg) no-repeat center -5px;
+}
+.file[mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"] {
+    background: url(../../../images/layout-assets/extension-doc.svg) no-repeat center -5px;
+}
+div#upload  .list-attachs li:hover a.thumb .subtitle {
+    opacity: 1;
+}
+div#upload  .list-attachs li a.thumb .subtitle {
+    display: block;
+    opacity: 0.9;
+    background: #222;
+    color: white;
+    font-size: 10px;
+    padding:2px 3px;
+    margin-top: 90px;
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+div#upload  .list-attachs li a:hover {
+
+}
+div#upload .menu-top {
+    position:absolute;
+    margin-top:3px;
+}
+div#upload .menu-top a:hover {
+    opacity: 1;
+}
+div#upload .menu-top a {
+    width:25px;
+    height:25px;
+    float:left;
+    text-align: center;
+    line-height: 27px;
+    background: #333;
+    margin-left:3px;
+    color:white;
+    opacity: 0.4;
+    border-radius: 25px;
+}
+
+div#upload .menu-top a.selectall:hover, div#upload .menu-top a.selectall.selected {
+    background-color:#5cb85c;
+    opacity: 1;
+}
+div#upload .menu-top a.delete:hover {
+    background-color:#d9534f;
+}
+
+.portlet-placeholder {
+    border: 1px dotted #5cb85c;
+    border-radius: 5px;
+}
+
+.attachModal .preloader {
+    float:left;
+    width:30px;
+    height: 30px;
+    background: url(../../../images/layout-assets/crud-preloader.gif) no-repeat center center;
+}
+.attachModal .modal-footer {
+    background: #f2f2f2;
+}
+.attachModal .thumb {
+    width:100px;
+    height: 95px;
+    margin: 30px auto;
+    border-radius: 5px;
+}
+.attachModal .panel-body {
+    padding:15px 0px;
+}
+
+.lightbox-nav {
+    text-align: center;
+    margin-bottom: 10px;
+}

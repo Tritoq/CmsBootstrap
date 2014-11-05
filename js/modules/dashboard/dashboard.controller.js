@@ -12,9 +12,21 @@ define(['../app/module', 'lazyload', 'config'], function (module, lazyload, conf
 
         if(Mobile.isNotMobile()) {
             $('.crud-snapshot .wrapper').each(function (index) {
-                var scroll = new IScroll('#'+$(this).attr('id'), {mouseWheel: true});
+                //var scroll = new IScroll('#'+$(this).attr('id'), {mouseWheel: true});
             });
         }
+
+
+        var squaresHeight = function () {
+            if($('.square')) {
+                $('.square').height(window.innerHeight);
+            } else {
+                $(window).unbind('resize', squaresHeight);
+            }
+        };
+
+        squaresHeight();
+        $(window).bind('resize', squaresHeight);
 
         $scope.gaInterval = null;
 

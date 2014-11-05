@@ -1,7 +1,5 @@
 <?php
 
-//sleep(3);
-
 session_start();
 
 $session_id = session_id();

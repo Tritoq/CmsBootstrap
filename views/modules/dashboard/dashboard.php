@@ -9,9 +9,9 @@ if($squares > 3) {
 }
 ?>
 
-<div class="square <?php echo $class3?>" >
+<div class="square <?php echo $class3?> crud-snapshot" >
     <div id="ga-chart">
-        <iframe id="ga" frameborder=0 scrolling=no src="views/modules/dashboard/ga.php" style="width:100%; height:100%; display:block;" ></iframe>
+        <iframe id="ga" frameborder=0 scrolling=no src="views/modules/dashboard/ga.php"  style="width:100%; height:100%; display:block;" ></iframe>
     </div>
 </div>
 <?php for($j=0;$j<$squares;$j++): ?>
@@ -21,7 +21,7 @@ if($squares > 3) {
         <div class="wrapper" id='grid-<?php echo $j?>' >
             <table class="container table table-striped">
                 <tbody>
-                    <?php for($i=0;$i<20;$i++):?>
+                    <?php for($i=0;$i<25;$i++):?>
                         <tr>
                             <td>Item <?php echo $i ?></td>
                             <td class="update"><a href="">Atualizar</a></td>

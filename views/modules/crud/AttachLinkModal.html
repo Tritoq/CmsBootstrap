@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h3 class="modal-title">Adicionar Link</h3>
+</div>
+<form class="form" ng-submit="confirm(item)">
+<div class="modal-body">
+    <p>Você pode anexar um arquivo através de um link da internet, copie e cole o endereço URL do navegador no campo abaixo:</p> <br/>
+
+        <input class="form-control" type="url" required="required" placeholder="Ex: http://google.com.br/images/image01.gif" ng-model="item.url" />
+</div>
+<div class="modal-footer">
+    <div class="preloader" ng-show="isLoading"></div>
+    <button class="btn btn-success" type="submit">Anexar</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancelar</button>
+</div>
+</form>

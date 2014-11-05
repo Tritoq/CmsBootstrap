@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h3 class="modal-title">Deletar item(s) selecionado(s)</h3>
+</div>
+<div class="modal-body">
+    Deseja confirmar a exclusão dos items selecionados ?
+    <ul class="list-group">
+        <li ng-repeat="item in items" class="list-group-item left">{{item.id}}</li>
+    </ul>
+
+
+</div>
+<div class="modal-footer">
+    <p class="text-warning pull-left">* Este processo não poderá ser mais revertido</p>
+    <button class="btn btn-danger" ng-click="confirm()">Excluir</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancelar</button>
+</div>
