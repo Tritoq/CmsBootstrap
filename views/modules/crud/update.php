@@ -1,5 +1,5 @@
 <div class="insert">
-    <form class="form" name="insertForm" ng-submit="insert(data)">
+    <form class="form" name="insertForm" ng-submit="update(data)">
         <div class="form-body">
             <div class="form-group">
                 <label class="form-label">Cliente</label>
@@ -40,14 +40,16 @@
                 <label>Descrição</label>
                 <text-angular ng-required="true" name="descr" ng-model="data.descr"></text-angular>
             </div>
-            <div>
+            <!--<div>
                 <label> Anexos</label>
-                <input multiple type="file" class="form-control" name="arquivo[]" id="files" />
-            </div>
+                <input multiple type="file" class="form-control" name="arquivo[]" id="files">
+
+                <button ng-click="openTest()" class="btn btn-danger">Teste</button>
+            </div>-->
         </div>
 
         <div class="form-group form-bar" ng-class="{'uploaded': ($root.upload.opened)}">
-            <button class="btn btn-success" ng-disabled="insertForm.$invalid" type="submit">Inserir</button>
+            <button class="btn btn-success" ng-disabled="insertForm.$invalid" type="submit">Atualizar</button>
             <button class="btn btn-warning pull-right" ng-disabled="!insertForm.$dirty" ng-click="data=null" type="reset">Limpar</button>
         </div>
     </form>

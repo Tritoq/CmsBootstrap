@@ -368,7 +368,7 @@ a{
 #slide-right, #slide-right.opened {
     width: calc(100% - 45px);
     float:right;
-    background: white;
+    background: #f2f2f2;
     min-height: 1024px;
 }
 

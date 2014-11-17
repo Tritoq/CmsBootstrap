@@ -11,6 +11,6 @@
 </div>
 <div class="modal-footer">
     <p class="text-warning pull-left">* Este processo não poderá ser mais revertido</p>
-    <button class="btn btn-danger" ng-click="confirm()">Excluir</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancelar</button>
+    <button class="btn btn-danger" ng-click="confirm()" ng-disabled="isLoading">Excluir</button>
+    <button class="btn btn-warning" ng-click="cancel()" ng-disabled="isLoading">Cancelar</button>
 </div>

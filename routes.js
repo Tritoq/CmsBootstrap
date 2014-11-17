@@ -23,5 +23,9 @@ define({
     'attachLink': 'data/attachLink.php',
     'attachSortable': 'data/attachSortable.php',
     'attachSubtitle': 'data/attachSubtitle.php',
-    'liveUpdate': 'data/live-update.php'
+    'attachDelete': 'data/attachDelete.php',
+    'liveUpdate': 'data/live-update.php',
+    'item': 'data/item.php',
+    'insert': 'data/insert.php',
+    'update': 'data/update.php'
 });

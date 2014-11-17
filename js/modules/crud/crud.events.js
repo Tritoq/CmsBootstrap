@@ -31,7 +31,18 @@ define([], function () {
 
         // REQUEST
 
-        'DELETE_REQUEST'                            : 'crud.delete.request'
+        'DELETE_REQUEST'                            : 'crud.delete.request',
+
+        // ATTACHS
+
+        'UPLOAD_OPEN'                               : 'crud.upload.open',
+        'UPLOAD_CLOSE'                              : 'crud.upload.close',
+        'UPLOAD_ADDED'                              : 'crud.upload.added',
+        'UPLOAD_MINIMIZE'                           : 'crud.upload.minimize',
+        'ATTACH_DELETE_REQUEST'                     : 'crud.attach.delete.request',
+        'ATTACH_DELETE_SUCCESS'                     : 'crud.attach.delete.success',
+        'ATTACH_DELETE_ERROR'                       : 'crud.attach.delete.error'
+
     };
 
     return event;

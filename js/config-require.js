@@ -30,6 +30,9 @@ define({
         'ui.sortable'                               :               'vendor/angular-ui-sortable/sortable',
         'bootstrapLightbox'                         :               'vendor/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox',
         'angular-loading-bar'                       :               'vendor/angular-loading-bar/build/loading-bar',
+        'ngSanitize'                                :               'vendor/textAngular/dist/textAngular-sanitize.min',
+        'text-angular'                              :               'vendor/textAngular/dist/textAngular.min',
+        'oclazyload'                                :               'vendor/oclazyload/dist/ocLazyLoad',
 
         'lazyload'                                  :               'js/components/lazy/lazyload',
         'dropzone'                                  :               'vendor/dropzone/downloads/dropzone',
@@ -58,7 +61,11 @@ define({
         'ui.bootstrap.tpls'                         :               ['angular'],
         'ui.sortable'                               :               ['angular'],
         'angular-loading-bar'                       :               ['angular'],
-        'bootstrapLightbox'                         :               ['angular', 'angular-loading-bar']
+        'angular-ui-select'                         :               ['angular'],
+        'bootstrapLightbox'                         :               ['angular', 'angular-loading-bar'],
+        'text-angular'                              :               ['angular'],
+        'ngSanitize'                                :               ['angular'],
+        'oclazyload'                                :               ['angular']
 
     }
 });

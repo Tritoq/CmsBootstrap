@@ -1,5 +1,4 @@
 .crud .bar {
-    background:white;
     padding:10px 10px;
 }
 .crud .bar h1 {
@@ -8,10 +7,11 @@
     padding:0;
     font-family: 'Source Sans Pro';
     font-weight: 100;
-    font-size:40px;
-    color: #1d1f1e;
+    font-size:30px;
+    color: #696969;
     text-align: center;
-    letter-spacing: -2px;
+    letter-spacing: -1px;
+    text-transform: uppercase;
 }
 
 .crud-container {
@@ -33,24 +33,20 @@
 
 .crud-container .tab a {
     float:left;
-    padding:6px 6px;
-    width:100px;
+    padding:8px 6px;
+    width:120px;
     text-align: center;
     background: #fbfbfb;
     border:1px solid #ececec;
     border-bottom: none;
+    margin-right: -1px;
 
     position: relative;
     z-index: 1;
     font-size:14px;
     font-family: 'Source Sans Pro';
+    font-weight: 300;
 
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     outline: none;
 
     -webkit-transition: all 0.2s ease-in-out;
@@ -62,20 +58,36 @@
 
 .crud-container .tab a.insert {
     z-index: 4;
-    color:#76bfa4;
+    color:#3c763d;
+}
+.crud-container .tab a.insert:hover, .crud-container .tab a.insert.selected {
+    background: #5cb85c;
+    color:white;
+}
+.crud-container .tab a.search:hover, .crud-container .tab a.search.selected {
+    background:#5bc0de ;
 }
 .crud-container .tab a.search {
     z-index: 2;
-    color:#73c8dc;
+    color:#31708f;
+}
+.crud-container .tab a.update:hover, .crud-container .tab a.update.selected {
+    background: #f0ad4e;
 }
 .crud-container .tab a.update {
     z-index: 3;
-    color:#cca272;
+    color:#8a6d3b;
+}
+.crud-container .tab a.config:hover,.crud-container .tab a.config.selected  {
+    background: #777;
 }
 .crud-container .tab a.config {
     z-index: 3;
     color: #3d3d3d;
     float:right;
+}
+.crud-container .tab a.view:hover, .crud-container .tab a.view.selected {
+    background: #337ab7;
 }
 .crud-container .tab a.view {
     z-index: 5;
@@ -84,7 +96,6 @@
 
 
 .crud-container .tab a:hover, .crud-container .tab a.selected {
-    background: #4a4a4a;
     color:white;
     text-decoration: none;
 }
@@ -520,6 +531,10 @@ div#upload {
     background: #333;
     -webkit-transition: -webkit-transform 1s ease, height 1s ease;
     transition: transform 1s ease, height 1s ease;
+    transform: translate(0px, 300px);
+}
+div#upload.open {
+    transform: translate(0px, 0px);
 }
 div#upload.closed {
     -webkit-transform: translate(0px, 270px);
@@ -603,6 +618,11 @@ div#upload .bt-expand span, div#upload .url-attach span {
     display: block;
     left:25px;
 }
+div#upload .bt-expand .badged {
+    margin-left:-20px;
+    margin-top:-20px;
+
+}
 div#upload .topbar .closeb {
     margin-left:1px;
     margin-right: 0px;
@@ -675,8 +695,9 @@ div#upload .right .label {
 }
 
 div#upload #area-upload {
-    width: calc(100% - 60px);
+    width: calc(100% - 120px);
     height:100%;
+    margin-left: 60px;
     padding:0px 0px 0px 0px;
     color:white;
     border: 8px solid transparent;

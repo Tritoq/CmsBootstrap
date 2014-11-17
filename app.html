@@ -16,10 +16,10 @@
     <link rel="shortcut icon" id="dynamic-favicon" href="/favicon.ico" type="image/x-icon" />
 </head>
 <!-- App Main -->
-<body ng-controller='ApplicationController'>
+<body ng-module="app.main">
 
     <!-- Container Main -->
-    <div id="container">
+    <div id="container" ng-controller='ApplicationController'>
         <!-- Barra Lateral -->
         <div id="slide-left" ng-class="{opened: open, closed: !open}" ng-swipe-right="openLeftBar()" ng-swipe-left="closeLeftBar()">
             <!-- Barra topo, info de login -->

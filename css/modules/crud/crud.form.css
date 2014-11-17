@@ -1,0 +1,53 @@
+div.insert {
+    width:50%;
+    float:left;
+}
+div.insert .form-body {
+    padding:20px;
+
+}
+div.preview {
+    width:50%;
+    float:right;
+    min-height: 200px;
+    height: 100%;
+    padding:20px;
+    background: #f9f9f9;
+}
+
+div.form-bar {
+    background: #2e2e2e;
+    margin:0;
+    position:fixed;
+    bottom:0;
+    width:calc(100% - 45px);
+
+    -webkit-transition: -webkit-transform 1s ease, height 1s ease;
+    transition: transform 1s ease, height 1s ease;
+    transform: translate(0px, 0px);
+}
+div.form-bar.uploaded {
+    transform: translate(0px, -32px);
+}
+
+div.form-group p.ng-binding {
+    min-height: 30px;
+}
+
+
+text-angular .btn-group {
+    margin-bottom: 10px;
+}
+
+div.insert .btn-success, div.insert .btn-warning {
+    padding: 10px 30px;
+    border-radius: 0;
+}
+
+div.container-html {
+    overflow: auto;
+    height: 400px;
+    background: white;
+    border-radius: 5px;
+    padding:10px;
+}

@@ -5,6 +5,8 @@ define([
     'angular',
     'config',
     'routes',
+    'lazymodules',
+    'lazyload',
     'ngAnimate',
 	'route-segment',
     'jquery-ui',
@@ -14,20 +16,21 @@ define([
     'ui.bootstrap',
     'ui.bootstrap.tpls',
     'ui.sortable',
-    'bootstrapLightbox'
-], function (angular, config, routes) {
+    'bootstrapLightbox',
+    'ngSanitize',
+    'text-angular',
+    'oclazyload',
+], function (angular, config, routes, lazymodules, lazyload) {
 
     'use strict';
 
-
-    var $app = angular.module('app.main', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'route-segment', 'view-segment', 'ngTouch', 'ui.sortable', 'bootstrapLightbox']);
+    var $app = angular.module('app.main', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'route-segment', 'view-segment', 'ngTouch', 'ui.sortable', 'bootstrapLightbox', 'textAngular', 'oc.lazyLoad']);
 
     // Configuration App
 
-    $app.config(['$tooltipProvider', '$routeProvider' , '$locationProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$routeSegmentProvider', 'LightboxProvider',
+    $app.config(['$routeProvider' , '$locationProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$routeSegmentProvider', 'LightboxProvider', '$ocLazyLoadProvider',
 
-        function ($tooltipProvider, $routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $routeSegmentProvider, LightboxProvider) {
-
+        function ($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $routeSegmentProvider, LightboxProvider, $ocLazyLoadProvider) {
 
         $app.register =
         {
@@ -38,22 +41,56 @@ define([
             service: $provide.service
         };
 
-        /** Tooltip configuration **/
-
-        $tooltipProvider.options({
-            appendToBody: true
+        $ocLazyLoadProvider.config({
+            loadedModules: ['app.main'],
+            jsLoader: requirejs,
+            debug: lazymodules.debug,
+            modules: lazymodules.modules
         });
 
         LightboxProvider.templateUrl = config.view.get('LightboxModal', 'html', 'crud');
 
         /** Routes **/
 
-        var resolve = {
+        var resolveCrud = {
             load: function ($route, $q, crudDataService) {
                 var defer = $q.defer();
                 require([config.js.get('crud')], function () {
                     var data = crudDataService.load($route.current.params.module, defer);
                 });
+
+                return defer.promise;
+            }
+        };
+
+
+        var resolveForm = {
+            form: function ($q, $route, $http) {
+
+                lazyload.css.addFile(config.css.get('crud.form', 'crud'));
+                lazyload.css.addFile('http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
+
+                var defer = $q.defer();
+                var id = $route.current.params.id;
+                var module = $route.current.params.module;
+
+                require([config.js.get('crud.form', 'crud')], function () {
+                    if(id) {
+                        var request = $http.get(routes.item, {params: {module: module, id: id}});
+
+                        request.success(function (data) {
+                            defer.resolve(data);
+                        });
+
+                        request.error(function () {
+                            defer.resolve();
+                            Message.show('error', 'Não foi possível buscar os dados do registro');
+                        });
+                    } else {
+                        defer.resolve();
+                    }
+                });
+
                 return defer.promise;
             }
         };
@@ -63,6 +100,7 @@ define([
             when('/:module.crud', 'crud').
             when('/:module.crud/view', 'crud.view').
             when('/:module.crud/insert', 'crud.insert').
+            when('/:module.crud/update/:id', 'crud.update').
             segment('dashboard', {
                 templateUrl: config.view.get('dashboard'),
                 controller: 'dashboardController',
@@ -82,7 +120,7 @@ define([
             segment('crud', {
                 templateUrl: config.view.get('crud'),
                 controller: 'crudController',
-                resolve: resolve,
+                resolve: resolveCrud,
                 dependencies: ['module']
             }).
             within().
@@ -92,7 +130,14 @@ define([
                 controller: 'crudViewController'
             }).
             segment('insert', {
-                templateUrl: config.view.get('insert', null, 'crud')
+                templateUrl: config.view.get('insert', null, 'crud'),
+                resolve: resolveForm,
+                controller: 'crudInsertController'
+            }).
+            segment('update', {
+               templateUrl: config.view.get('update', null, 'crud'),
+                resolve: resolveForm,
+                controller: 'crudUpdateController'
             });
 
     }]);
@@ -380,10 +425,11 @@ define([
     });
 
 
-    $app.factory('crudDataService', function ($http, $q) {
+    $app.factory('crudDataService', function ($http, $q, $ocLazyLoad) {
         return {
             data: {},
             lastModule: null,
+
             load: function (mod, defer) {
 
                 this.lastModule = mod;
@@ -394,7 +440,39 @@ define([
 
                 var promise = request.then(function (response) {
                     service.data = response.data;
-                    defer.resolve();
+
+                    var js = service.data.crud.js;
+                    var lazy = service.data.crud.lazymodule;
+
+                    if(js != undefined || lazy != undefined) {
+
+                        var total = js.length + lazy.length;
+
+                        var loaded = 0;
+
+                        for (var i in js) {
+                            require([js[i].replace('.js', '')], function () {
+                                loaded++;
+                                if(loaded >= total) {
+                                    defer.resolve();
+                                }
+                            });
+                        }
+
+                        for(var i in lazy) {
+                            $ocLazyLoad.load([lazy[i]]).then(
+                                function () {
+                                    loaded++;
+                                    if(loaded >= total) {
+                                        defer.resolve();
+                                    }
+                                }
+                            )
+                        }
+                    } else {
+                        defer.resolve();
+                    }
+
                     return (response.data);
                 }, function (response) {
                     return ($q.reject('Error'));
@@ -503,6 +581,7 @@ define([
     $app.factory('Error', function (Message) {
         return {
             show: function (msg, code, timeout) {
+                console.error(msg);
                 Message.show('error', msg, code, timeout)
             }
         };
@@ -529,7 +608,7 @@ define([
 
     $app.value('$anchorScroll', angular.noop);
 
-    $app.directive('ngTooltip', function () {
+    /*$app.directive('ngTooltip', function () {
         return {
             restrict: 'A',
             template: '<input tooltip tooltip-placement="bottom" tooltip-trigger="focus">',
@@ -538,7 +617,7 @@ define([
                 attrs.$set('tooltip', attrs['placeholder']);
             }
         };
-    });
+    });*/
 
 
     $app.directive("repeatPassword", function() {
@@ -596,6 +675,25 @@ define([
         }
     });
 
+
+    $app.directive('lazyload', function () {
+        return {
+            restrict: 'E',
+            link: function (scope, elem, attrs) {
+                var type = attrs.type;
+                var src = attrs.src;
+
+                if(type == 'css') {
+                    lazyload.css.addFile(src);
+                } else if(type == 'js') {
+                    require([src]);
+                }
+            }
+        }
+    });
+
+
+
     $app.filter('bytes', function() {
         return function(bytes, precision) {
             if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
@@ -603,6 +701,12 @@ define([
             var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
                 number = Math.floor(Math.log(bytes) / Math.log(1024));
             return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
+        }
+    });
+
+    $app.filter('toHtml', function ($sce) {
+        return function (str) {
+            return $sce.trustAsHtml(str);
         }
     });
 
